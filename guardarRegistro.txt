@@ -1,0 +1,35 @@
+// NUEVA FUNCIÓN guardarRegistro (CORREGIDA)
+async function guardarRegistro(valor) {
+    const data = {
+        nombre: document.getElementById("nombre").value,
+        unidad: document.getElementById("unidad").value,
+        correo: document.getElementById("correo").value,
+        telefono: document.getElementById("telefono").value,
+        fecha: document.getElementById("fecha").value,
+        fechaActa: document.getElementById("fechaActa").value,
+        horas: document.getElementById("horas").value,
+        minutos: document.getElementById.value,
+        valor
+    };
+
+    // 💡 CORRECCIÓN: Usar URLSearchParams para enviar datos como formulario web
+    const formData = new URLSearchParams();
+    for (const key in data) {
+        // Asegurarse de que el valor exista antes de agregarlo
+        formData.append(key, data[key]); 
+    }
+    
+    // Obtener la URL de implementación corregida de la imagen:
+    const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwspDVcK8zS1sTBU9_r4YCwaEsEJbJYbXyYcsbj-L8PS0Y3fJkA2ScHF/exec"; // Usar el link de tu imagen
+    
+    try {
+        await fetch(APP_SCRIPT_URL, {
+            method: "POST",
+            body: formData, // Enviar como URLSearchParams (formato de formulario)
+            // NO se necesita la cabecera 'Content-Type: application/json'
+        });
+        console.log("Registro guardado exitosamente.");
+    } catch (e) {
+        console.error("Error al guardar el registro:", e);
+    }
+}

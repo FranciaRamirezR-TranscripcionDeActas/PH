@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trayectoria | Francia Ramírez</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* --------------------------------- */
+        /* 0. VARIABLES Y ESTILOS BASE */
+        /* --------------------------------- */
+        :root {
+            --color-principal: #1e2a38; /* Azul marino oscuro */
+            --color-acento: #d4af37; /* Dorado */
+            --color-fondo: #fdfaf7;
+            --color-texto: #2c2c2c;
+            --altura-promo: 35px; /* Altura de la nueva barra de promoción */
+        }
+
+        body {
+            font-family: 'Georgia', serif; 
+            margin: 0;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            overflow-x: hidden; 
+            padding-top: var(--altura-promo); 
+            scroll-behavior: smooth; 
+        }
+
+        h2, h3 {
+            color: var(--color-principal);
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* --------------------------------- */
+        /* ESTILOS DEL HEADER Y FOOTER */
+        /* --------------------------------- */
+        .barra-promocion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--altura-promo);
+            background-color: var(--color-acento); 
+            color: var(--color-principal); 
+            text-align: center;
+            line-height: var(--altura-promo);
+            font-size: 0.95rem;
+            font-weight: bold;
+            z-index: 200; 
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .barra-promocion:hover {
+            background-color: #c09c32; 
+            color: white; 
+        }
+        
+        .barra-promocion i {
+            margin-right: 8px;
+            animation: pulse 1.5s infinite; 
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        header {
+            background: linear-gradient(90deg, var(--color-principal) 0%, #24384e 100%);
+            padding: 15px 40px;
+            color: white;
+            position: sticky;
+            top: var(--altura-promo); 
+            z-index: 100;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-box {
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+        }
+
+        header img {
+            height: 55px; 
+            border-radius: 50%;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--color-acento);
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: var(--color-acento);
+        }
+
+        .menu-toggle {
+            display: none; 
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: var(--color-principal);
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--color-acento);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* --------------------------------- */
+        /* 1. SLOGAN (TITULAR CENTRAL CON SWITCH VERTICAL) */
+        /* --------------------------------- */
+        .eslogan-principal-title {
+            font-size: 1.6rem; 
+            font-style: italic;
+            font-weight: bold;
+            color: var(--color-principal); 
+            background-color: var(--color-acento); 
+            
+            max-width: 800px; 
+            margin: 40px auto; 
+            padding: 15px 20px;
+            border-radius: 8px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+            
+            position: relative;
+            overflow: hidden;
+            height: 70px; 
+            
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+        }
+
+        .eslogan-dinamico-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .eslogan-rotador {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 50%;
+            opacity: 0;
+            transform: translateY(100%); 
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .eslogan-rotador.active {
+            opacity: 1;
+            transform: translateY(-50%); 
+        }
+        
+        /* --------------------------------- */
+        /* 2. ESTILOS DE TRAYECTORIA (Sticky con corrección de espacios) */
+        /* --------------------------------- */
+        .trayectoria-main-content {
+            display: flex; 
+            max-width: 1200px;
+            margin: 50px auto 0; 
+            gap: 40px;
+            padding: 0 20px;
+        }
+
+        /* Contenedor del texto derecho - Altura mínima aumentada para asegurar scroll */
+        .texto-trayectoria {
+            flex: 1; 
+            padding-left: 20px; 
+            min-width: 0; 
+            /* ALTURA MÍNIMA AUMENTADA PARA FORZAR EL SCROLL (1800px) */
+            min-height: 1800px; 
+            margin-bottom: 0; 
+        }
+
+        /* La columna de la imagen (más ancha) */
+        .imagen-perfil-columna {
+            flex: 0 0 500px; /* ANCHO DE COLUMNA AJUSTADO PARA IMAGEN MÁS GRANDE */
+            position: sticky; 
+            top: 100px; /* Se pega debajo del header */
+            height: fit-content; 
+            align-self: flex-start; 
+            
+            background-color: transparent; 
+            border: none;
+            box-shadow: none; 
+            padding: 0; 
+            
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center; 
+            
+            position: relative; 
+            z-index: 1; 
+            overflow: hidden; 
+        }
+
+        /* Pseudo-elemento para el logo de fondo (más grande) */
+        .imagen-perfil-columna::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            background-image: url('logo_francia.jpg'); 
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 95%; /* TAMAÑO DEL LOGO DE FONDO AUMENTADO */
+            
+            opacity: 0.25; 
+            filter: grayscale(100%) brightness(1.2); 
+            
+            z-index: -1; 
+            transition: opacity 0.3s ease, filter 0.3s ease; 
+        }
+        
+        .imagen-perfil-columna:hover::before {
+            opacity: 0.4; 
+            filter: grayscale(80%) brightness(1.1); 
+        }
+
+
+        .imagen-perfil-columna img {
+            width: 100%; 
+            max-width: 500px; /* TAMAÑO DE LA IMAGEN PRINCIPAL AUMENTADO */
+            height: auto;
+            display: block; 
+            border-radius: 0; 
+            box-shadow: none; 
+            position: relative; 
+            z-index: 2; 
+        }
+
+        /* Estilos de texto (se mantienen) */
+        .texto-trayectoria h2 {
+            font-size: 2.5rem;
+            color: var(--color-principal);
+            margin-top: 0;
+            border-bottom: 2px solid var(--color-acento);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            text-align: center; 
+        }
+        
+        .texto-trayectoria h3 {
+            font-size: 1.8rem;
+            color: var(--color-principal);
+            margin-top: 40px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .texto-trayectoria p {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* ESTILOS PARA LAS TARJETAS DE COMPROMISOS (se mantienen) */
+        .compromisos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            padding-bottom: 30px; 
+        }
+
+        .compromiso-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            border-top: 5px solid var(--color-acento); 
+            opacity: 0; 
+            transform: translateY(20px); 
+        }
+        
+        .compromiso-card.in-view {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .compromiso-card:nth-child(1).in-view { transition-delay: 0s; }
+        .compromiso-card:nth-child(2).in-view { transition-delay: 0.2s; }
+        .compromiso-card:nth-child(3).in-view { transition-delay: 0.4s; }
+        .compromiso-card:nth-child(4).in-view { transition-delay: 0.6s; }
+
+
+        .compromiso-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            background-color: #fcfcfc; 
+        }
+
+        .compromiso-card i {
+            font-size: 3.5rem; 
+            color: var(--color-acento);
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+        .compromiso-card:hover i {
+            color: var(--color-principal); 
+        }
+
+        .compromiso-card h4 {
+            font-size: 1.4rem;
+            color: var(--color-principal);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        /* --------------------------------- */
+        /* RESPONSIVIDAD MÓVIL */
+        /* --------------------------------- */
+        @media (max-width: 900px) {
+             header { 
+                padding: 10px 20px; 
+                top: 0; 
+            }
+            .logo-box h1 { font-size: 1.5rem; }
+            .logo-box img { height: 40px; }
+
+            nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: calc(45px + var(--altura-promo)); 
+                right: 0;
+                width: 100%;
+                background-color: var(--color-principal);
+            }
+            .menu-toggle { display: block; }
+            
+            /* RESPONSIVIDAD DE LA PÁGINA TRAYECTORIA */
+            .trayectoria-main-content {
+                flex-direction: column; 
+                margin: 20px auto;
+            }
+            .imagen-perfil-columna {
+                position: static; 
+                flex: none;
+                width: 100%;
+                order: -1; 
+                margin-bottom: 20px;
+                text-align: center; 
+                padding: 0; 
+            }
+            .imagen-perfil-columna::before {
+                background-size: 60%; 
+                opacity: 0.2; 
+            }
+            .imagen-perfil-columna img {
+                max-width: 90%; 
+            }
+            .texto-trayectoria {
+                padding-left: 0;
+                min-height: initial; 
+                margin-bottom: 50px; 
+            }
+            .texto-trayectoria h2 {
+                 font-size: 2rem; 
+            }
+            .texto-trayectoria h3 {
+                font-size: 1.5rem;
+            }
+            .eslogan-principal-title {
+                font-size: 1.2rem; 
+                height: 50px;
+                padding: 10px 0;
+            }
+            .compromisos-grid {
+                grid-template-columns: 1fr; 
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <a href="https://linktr.ee/TranscripcionProfesionalFFRR" class="barra-promocion" target="_blank">
+        <i class="fas fa-star"></i> ¡PROMOCIONES DEL MES! HAZ CLIC AQUÍ <i class="fas fa-star"></i>
+    </a>
+
+    <header>
+        <div class="logo-box">
+            <img src="logo_francia.jpg" alt="Logo circular dorado con iniciales FR, de Francia Ramírez">
+            <h1>Francia Ramírez</h1>
+        </div>
+        
+        <button class="menu-toggle" aria-label="Abrir menú de navegación">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav id="menu-principal" aria-label="Menú principal">
+            <a href="index.html#inicio">Inicio</a>
+            <a href="index.html#servicios">Servicios</a>
+            <a href="index.html#confianza">Confianza</a>
+            <a href="quiensoy.html">Quién soy</a>
+            <a href="trayectoria.html">Trayectoria</a>
+            <a href="index.html#cotizar" class="btn-cotizar-nav">Cotización</a> 
+            <a href="contacto.html">Contáctenos</a>
+        </nav>
+    </header>
+
+    <main>
+        
+        <div class="eslogan-principal-title">
+            <div class="eslogan-dinamico-wrapper" id="slogan-wrapper">
+                <span class="eslogan-rotador active">Transformando audios en claridad legal.</span>
+                <span class="eslogan-rotador">Su precisión, nuestra prioridad.</span>
+                <span class="eslogan-rotador">Experiencia, confianza, resultados impecables.</span>
+            </div>
+        </div>
+
+        <div class="trayectoria-main-content"> 
+            
+            <div class="imagen-perfil-columna">
+                <img src="trayectoriaffrr.png" alt="Francia Ramírez, transcriptora profesional">
+            </div>
+
+            <div class="texto-trayectoria">
+                
+                <h2>Nuestra Trayectoria: Forjando Confianza con Cada Acta</h2>
+                
+                <p>En el corazón de la Propiedad Horizontal, donde cada palabra cuenta y cada decisión impacta, Francia Ramírez se erige como su aliada experta. Nuestra trayectoria es un testimonio de **dedicación inquebrantable a la precisión jurídica y la confidencialidad**. Hemos transformado innumerables horas de grabaciones en actas impecables, consolidando la legalidad y la claridad de sus reuniones más importantes.</p>
+                
+                <p>Comprendemos profundamente las complejidades y el valor de los acuerdos tomados en **Asambleas y Consejos de Administración**. Por ello, nuestro servicio trasciende la mera transcripción, convirtiéndose en una garantía de fidelidad que asegura que cada documento final es un reflejo exacto y formal de lo acontecido, cumpliendo cabalmente con los requisitos de la Ley 675.</p>
+
+                <h3>¿Por qué elegir un servicio de transcripción especializado?</h3>
+                
+                <p>Elegir a Francia Ramírez es optar por la **tranquilidad y la seguridad**. Con años de experiencia enfocados en la Propiedad Horizontal, hemos cultivado un ojo experto para la terminología legal y la estructura que sus actas demandan. Nuestro compromiso es entregar un documento pulcro, libre de ambigüedades, que facilite su registro y blinde las decisiones de su comunidad.</p>
+                
+                <p>Además de la rigurosidad técnica, nuestra experiencia nos permite manejar con destreza los desafíos de audio de diversas fuentes y formatos, asegurando que ni el ruido de fondo ni las interrupciones comprometan la calidad final del documento. Esta capa extra de experticia es lo que nos diferencia en el sector, garantizando que su acta sea un documento irrefutable.</p>
+                
+                <p>Nuestra misión es ser su socio de confianza, no solo un proveedor de servicios. Nos apasiona la precisión y la contribución a la eficiencia operativa de su comunidad, liberándolo de la carga de las transcripciones y permitiéndole enfocarse en la gestión y el bienestar de su propiedad. Desde pequeñas reuniones de consejo hasta asambleas generales con múltiples intervenciones, manejamos cada proyecto con la misma dedicación y profesionalismo. Puede confiar en que sus actas no solo serán transcritas, sino que serán elaboradas con la visión de un experto que entiende el valor de cada detalle legal.</p>
+
+                <p> La vasta experiencia acumulada en diferentes tipos de copropiedades, ya sean residenciales, comerciales o mixtas, nos da la perspectiva única necesaria para abordar cualquier casuística que surja en sus grabaciones. Este conocimiento práctico se traduce en actas que minimizan riesgos legales y facilitan la labor de la administración y el consejo. Garantizamos una entrega digital segura y con el formato que mejor se adapte a sus necesidades de archivo. Su tranquilidad es el resultado de nuestro rigor. </p>
+
+                <h3>Nuestros Pilares de Servicio: Compromisos que Marcan la Diferencia</h3>
+                
+                <div class="compromisos-grid">
+                    <div class="compromiso-card">
+                        <i class="fas fa-gavel"></i> 
+                        <h4>Rigor Metodológico y Legal</h4>
+                        <p>Analizamos cada minuto de audio con la máxima atención, garantizando que su acta capture fielmente cada acuerdo y votación, sin desviaciones ni interpretaciones.</p>
+                    </div>
+                    <div class="compromiso-card">
+                        <i class="fas fa-city"></i>
+                        <h4>Inmersión en Propiedad Horizontal</h4>
+                        <p>Nuestro conocimiento especializado del sector nos permite anticipar y estructurar sus actas con la formalidad y terminología exacta, ahorrándole tiempo y futuras correcciones.</p>
+                    </div>
+                    <div class="compromiso-card">
+                        <i class="fas fa-lock"></i>
+                        <h4>Confidencialidad Absoluta</h4>
+                        <p>La información de sus reuniones es tratada bajo el más estricto secreto profesional, asegurando la total discreción y protección de sus datos.</p>
+                    </div>
+                    <div class="compromiso-card">
+                        <i class="fas fa-award"></i>
+                        <h4>Entrega Oportuna Garantizada</h4>
+                        <p>Sabemos que el tiempo es oro. Nos comprometemos a entregar sus actas en los plazos acordados, para que sus procesos internos no se detengan.</p>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; margin-top: 50px; font-size: 1.2rem; font-style: italic; color: var(--color-principal);">
+                    Invitamos a nuestros clientes a experimentar un servicio que va más allá de la transcripción, ofreciendo **una alianza estratégica para la legalidad y organización** de su copropiedad.
+                </p>
+                
+                <div style="text-align: center; margin-top: 40px; margin-bottom: 80px;">
+                    <a href="index.html#servicios" class="btn-cotizar" style="background-color: var(--color-acento); color: var(--color-principal); padding: 12px 25px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.3s ease, color 0.3s ease;">
+                        Descubra nuestros Servicios
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+        </main>
+
+
+    <footer>
+        <div class="contenedor">
+            <p>© 2025 Francia Ramírez | Transcriptora Profesional de Actas de Propiedad Horizontal</p>
+            <p>Todos los derechos reservados | Cali, Colombia</p>
+            <p>
+                ✉️ <a href="mailto:franciar814@gmail.com">franciar814@gmail.com</a> | 
+                📱 <a href="https://wa.me/573176344778">317 634 4778</a> | 
+                <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/francia_ramirezr" target="_blank">@francia_ramirezr</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Lógica para el menú de navegación en móvil
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.menu-toggle').addEventListener('click', function() {
+                document.getElementById('menu-principal').classList.toggle('active');
+            });
+
+            // Lógica para el eslogan dinámico (Vertical Switch/Fade)
+            const slogans = document.querySelectorAll('.eslogan-rotador');
+            let currentSlogan = 0;
+            const SLOGAN_INTERVAL = 4000; 
+
+            function changeSlogan() {
+                slogans[currentSlogan].classList.remove('active');
+                currentSlogan = (currentSlogan + 1) % slogans.length;
+                slogans[currentSlogan].classList.add('active');
+            }
+
+            if (slogans.length > 1) {
+                slogans[0].classList.add('active'); 
+                setInterval(changeSlogan, SLOGAN_INTERVAL);
+            }
+
+
+            // Lógica para la animación de las tarjetas al hacer scroll (Intersection Observer)
+            const compromisoCards = document.querySelectorAll('.compromiso-card');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            compromisoCards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

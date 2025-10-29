@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Francia Ramírez | Transcripción Profesional de Actas</title>
+    
+    <meta name="description" content="Especialista en transcripción profesional de actas de asamblea y consejos de administración. Precisión jurídica, confidencialidad y entrega oportuna en Colombia.">
+    <meta name="keywords" content="transcripción profesional, actas asamblea, consejos de administración, propiedad horizontal, Cali, Colombia, servicio confiable">
+    <meta name="author" content="Francia Ramírez">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        /* --------------------------------- */
+        /* 0. VARIABLES Y ESTILOS BASE */
+        /* --------------------------------- */
+        :root {
+            --color-principal: #1e2a38; /* Azul marino oscuro */
+            --color-acento: #d4af37; /* Dorado */
+            --color-fondo: #fdfaf7;
+            --color-texto: #2c2c2c;
+            --altura-promo: 35px; /* Altura de la nueva barra de promoción */
+        }
+
+        body {
+            font-family: 'Georgia', serif; 
+            margin: 0;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            overflow-x: hidden; 
+            /* Agregamos padding al body para evitar que la barra superior tape el contenido al inicio */
+            padding-top: var(--altura-promo); 
+        }
+
+        h2, h3 {
+            color: var(--color-principal);
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* --------------------------------- */
+        /* NUEVA BARRA DE PROMOCIÓN SUPERIOR (No intrusiva) */
+        /* --------------------------------- */
+        .barra-promocion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--altura-promo);
+            background-color: var(--color-acento); /* Dorado */
+            color: var(--color-principal); /* Azul oscuro */
+            text-align: center;
+            line-height: var(--altura-promo);
+            font-size: 0.95rem;
+            font-weight: bold;
+            z-index: 200; /* Asegura que esté por encima de todo */
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .barra-promocion:hover {
+            background-color: #c09c32; /* Dorado un poco más oscuro al pasar el ratón */
+            color: white; /* Mejor contraste al hacer hover */
+        }
+        
+        .barra-promocion i {
+            margin-right: 8px;
+            animation: pulse 1.5s infinite; /* Animación para llamar la atención */
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* --------------------------------- */
+        /* 1. HEADER Y NAVEGACIÓN (Responsive) */
+        /* --------------------------------- */
+        header {
+            background: linear-gradient(90deg, var(--color-principal) 0%, #24384e 100%);
+            padding: 15px 40px;
+            color: white;
+            position: sticky;
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Ajuste para que el header NO se quede fijo en top:0, sino debajo de la barra */
+        @media (min-width: 901px) {
+            header {
+                top: var(--altura-promo);
+            }
+        }
+        /* Esto evita que el menú tape el logo al hacer scroll, manteniendo top:0 para móviles */
+        @media (max-width: 900px) {
+            header {
+                top: 0; 
+            }
+        }
+        
+        /* AJUSTES PARA HACER EL LOGO Y NOMBRE MÁS GRANDES */
+        .logo-box {
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+        }
+
+        header img {
+            /* Incremento del tamaño del logo (antes 45px) */
+            height: 55px; 
+            border-radius: 50%;
+        }
+
+        header h1 {
+            margin: 0;
+            /* Incremento del tamaño del nombre (antes 1.5rem) */
+            font-size: 1.8rem;
+            color: var(--color-acento);
+            letter-spacing: 1px;
+        }
+
+        /* AJUSTES PARA HACER LAS PESTAÑAS MÁS GRANDES */
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+            /* Incremento del tamaño de las pestañas (antes 0.95rem) */
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: var(--color-acento);
+        }
+
+        .menu-toggle {
+            display: none; 
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --------------------------------- */
+        /* 2. SECCIÓN HERO (PRINCIPAL) */
+        /* --------------------------------- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh; 
+            padding: 80px 20px;
+            background-color: var(--color-fondo);
+            text-align: center;
+        }
+
+        .hero img {
+            /* Asegurarse de que esta imagen sea la misma que se usa en el PDF (logo_francia.jpg) */
+            width: 150px;
+            border-radius: 50%;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            border: 4px solid var(--color-acento);
+        }
+
+        .hero h2 {
+            font-family: "Poppins", sans-serif; 
+            font-size: 3rem; 
+            color: var(--color-principal);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h3 {
+            font-size: 1.5rem;
+            color: #4a4a4a;
+            font-weight: normal;
+            max-width: 700px;
+        }
+
+        .hero p {
+            max-width: 800px;
+            margin-top: 20px;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        .btn-cotizar {
+            background-color: var(--color-acento);
+            color: var(--color-principal);
+            padding: 15px 35px; 
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 35px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-size: 1.1rem;
+        }
+
+        .btn-cotizar:hover {
+            background-color: #c09c32;
+            transform: translateY(-3px);
+        }
+        
+        /* --------------------------------- */
+        /* ESTILOS PARA BOTONES DE COMPARTIR */
+        /* --------------------------------- */
+        .share-buttons {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .share-buttons a {
+            font-size: 1.5rem;
+            color: var(--color-principal);
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .share-buttons a:hover {
+            color: var(--color-acento);
+            transform: scale(1.1);
+        }
+        
+        /* --------------------------------- */
+        /* 3. SECCIONES DE CONTENIDO */
+        /* --------------------------------- */
+        .seccion {
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .seccion-valor {
+            background-color: var(--color-principal);
+            color: white;
+        }
+        
+        .seccion-valor h2 {
+            color: var(--color-acento);
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .ventajas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .ventaja-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .ventaja-item:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .ventaja-item i {
+            font-size: 3rem;
+            color: var(--color-acento);
+            margin-bottom: 15px;
+        }
+
+        .ventaja-item h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-top: 0;
+        }
+        
+        .seccion-diferenciador {
+            background-color: var(--color-fondo);
+        }
+        
+        .seccion-diferenciador h2 {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+        
+        /* --------------------------------- */
+        /* NUEVO ESTILO: PÁGINA DE TRAYECTORIA */
+        /* --------------------------------- */
+        .trayectoria-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+            /* Forzar el layout de una sola columna, eliminando el flex lateral */
+            display: block; 
+        }
+
+        /* Ocultamos la columna de imagen de perfil completamente */
+        .imagen-perfil-columna {
+            display: none; 
+            visibility: hidden;
+        }
+        
+        /* Eliminamos los estilos de la imagen de perfil ya que ha sido oculta */
+        /*
+        .imagen-perfil-columna img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border: 5px solid var(--color-acento);
+        }
+        */
+
+        .texto-trayectoria {
+            flex: 1; /* Ocupa el espacio restante */
+            /* Eliminamos el padding izquierdo, ya no hay columna a la izquierda */
+            padding-left: 0; 
+            min-width: 0; 
+            position: relative; 
+            z-index: 1; /* Asegurar que el texto esté encima */
+        }
+        
+        /* Pseudo-elemento para el logo repetido de fondo */
+        .texto-trayectoria::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1; /* Lo enviamos detrás del contenido */
+            background-image: url('logo_francia.jpg'); /* Usamos el logo */
+            background-repeat: repeat-y; /* Repetir verticalmente */
+            background-size: 150px; /* Tamaño del logo */
+            background-position: center; /* Posicionamiento centrado */
+            opacity: 0.05; /* Hacemos el logo muy transparente (color natural + transparencia) */
+            pointer-events: none; /* Asegura que no interfiera con el texto */
+        }
+        
+        /* Aseguramos que el texto esté visible sobre el fondo */
+        .texto-trayectoria h2, .texto-trayectoria p {
+            position: relative; 
+            z-index: 2;
+        }
+
+        .texto-trayectoria h2 {
+            font-size: 2.5rem;
+            color: var(--color-principal);
+            margin-top: 0;
+        }
+
+        .texto-trayectoria p {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+
+        /* --------------------------------- */
+        /* BOTÓN FLOTANTE DE WHATSAPP (Añadido) */
+        /* --------------------------------- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .whatsapp-float .btn-whatsapp {
+            background-color: #25d366; /* Color oficial de WhatsApp */
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 2.2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s;
+            line-height: 1; /* Para centrar el ícono */
+            text-decoration: none;
+        }
+
+        .whatsapp-float .btn-whatsapp:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-float .mensaje-flotante {
+            background-color: var(--color-principal);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-right: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Animación para aparecer de forma sutil */
+            opacity: 0;
+            transform: translateX(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            white-space: nowrap; /* Evita que el texto se rompa */
+            pointer-events: none; /* Asegura que el clic pase al botón */
+        }
+        
+        /* Efecto de aparecer y que se mantenga visible */
+        .whatsapp-float:hover .mensaje-flotante,
+        .whatsapp-float .btn-whatsapp:hover + .mensaje-flotante,
+        .whatsapp-float .mensaje-flotante.show { 
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 900px) {
+            .whatsapp-float {
+                bottom: 15px;
+                right: 15px;
+            }
+            .whatsapp-float .mensaje-flotante {
+                /* Ocultar en pantallas muy pequeñas si es necesario */
+                display: none; 
+            }
+            
+            /* RESPONSIVIDAD DE LA PÁGINA TRAYECTORIA */
+            .trayectoria-container {
+                /* Aseguramos el layout simple en móvil */
+                margin: 20px auto;
+                display: block;
+            }
+            .imagen-perfil-columna {
+                /* Ya está oculto, aseguramos */
+                display: none;
+            }
+            
+            .texto-trayectoria {
+                padding-left: 0;
+            }
+        }
+        
+        /* --------------------------------- */
+        /* 4. FOOTER */
+        /* --------------------------------- */
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: var(--color-principal);
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--color-acento);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* 5. VENTANA MODAL DE COTIZACIÓN - ESTILOS BASE */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto; 
+            background-color: rgba(0,0,0,0.5);
+            padding-top: 20px;
+        }
+
+        .modal-contenido {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%; 
+            max-width: 750px; 
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .cerrar {
+            color: #aaa;
+            float: right;
+            font-size: 35px; 
+            font-weight: bold;
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            line-height: 1;
+        }
+
+        .cerrar:hover,
+        .cerrar:focus {
+            color: var(--color-principal);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 6. ESTILOS DEL FORMULARIO DE COTIZACIÓN */
+        .form-cotizacion-container {
+            max-width: 700px;
+            margin: 0 auto; 
+            background: #fff;
+            padding: 10px;
+            box-shadow: none; 
+        }
+        .form-cotizacion-container h1 {
+            text-align: center;
+            color: #bfa76f;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+        .form-cotizacion-container label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #3a2f1f;
+            font-size: 14px;
+        }
+        .form-cotizacion-container input, .form-cotizacion-container select {
+            width: 100%;
+            padding: 10px 8px; 
+            border: 1px solid #c5a05a;
+            border-radius: 6px;
+            margin-top: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .form-cotizacion-container input[readonly] {
+            background-color: #f0f0f0; 
+            cursor: default;
+        }
+        .form-cotizacion-container .row {
+            display: flex;
+            gap: 10px;
+        }
+        .form-cotizacion-container .row div {
+            flex: 1;
+        }
+        .form-cotizacion-container button {
+            background-color: var(--color-acento);
+            color: var(--color-principal);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 15px;
+        }
+        .form-cotizacion-container button:hover {
+            background-color: #c09c32;
+        }
+        .form-cotizacion-container .buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap; 
+        }
+        .form-cotizacion-container .buttons button {
+            min-width: 48%; 
+            margin-bottom: 10px;
+        }
+        .form-cotizacion-container .valor {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #3a2f1f;
+        }
+        
+        /* 7. RESPONSIVIDAD AVANZADA (MÓVIL) */
+        @media (max-width: 900px) {
+            header { padding: 10px 20px; }
+            
+            /* Ajuste de los elementos del logo para móviles para mantener la estética */
+            header img {
+                height: 40px; 
+            }
+            header h1 {
+                font-size: 1.5rem; 
+            }
+
+            nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: calc(45px + var(--altura-promo)); 
+                right: 0;
+                width: 100%;
+                background-color: var(--color-principal);
+                box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+            }
+            nav.active { display: flex; }
+            nav a {
+                margin: 0 20px;
+                padding: 12px 0; 
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                width: calc(100% - 40px);
+                text-align: left;
+                font-size: 1.15rem; 
+            }
+            .menu-toggle { display: block; }
+            .hero h2 { font-size: 2.3rem; }
+            .hero h3 { font-size: 1.3rem; }
+            .seccion { padding: 40px 0; }
+            .ventaja-item { padding: 25px; }
+            .form-cotizacion-container .row {
+                flex-direction: column; 
+                gap: 0;
+            }
+            .form-cotizacion-container .row div { flex: none; }
+            .form-cotizacion-container .buttons button {
+                min-width: 100%; 
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="https://linktr.ee/TranscripcionProfesionalFFRR" class="barra-promocion" target="_blank">
+        <i class="fas fa-star"></i> ¡PROMOCIONES DEL MES! HAZ CLIC AQUÍ <i class="fas fa-star"></i>
+    </a>
+
+    <header>
+        <div class="logo-box">
+            <img src="logo_francia.jpg" alt="Logo circular dorado con iniciales FR, de Francia Ramírez">
+            <h1>Francia Ramírez</h1>
+        </div>
+        
+        <button class="menu-toggle" aria-label="Abrir menú de navegación">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav id="menu-principal" aria-label="Menú principal">
+            <a href="#inicio">Inicio</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#confianza">Confianza</a>
+            <a href="quiensoy.html">Quién soy</a>
+            <a href="trayectoria.html">Trayectoria</a>
+            <a href="#" id="abrirModal" class="btn-cotizar-nav">Cotización</a> 
+            <a href="contacto.html">Contáctenos</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="inicio">
+        <img src="logo_francia.jpg" alt="Logo Francia Ramírez, transcripción profesional">
+        <h2>La Precisión Jurídica que sus Actas Requieren</h2>
+        <h3>Especialista en Transcripción Profesional de Actas de Asamblea y Consejos de Administración.</h3>
+        <p>Garantizo la fidelidad total de sus reuniones grabadas a documentos oficiales, con la estructura y formalidad exigidas por la Ley 675. Servicio confidencial, oportuno y enfocado en la Propiedad Horizontal.</p>
+        
+        <a href="#" id="abrirModalCTA" class="btn-cotizar">Solicite su Cotización al Instante</a>
+        
+        <div class="share-buttons">
+            <p style="margin: 0; font-weight: bold; color: var(--color-principal);">Compartir:</p>
+            <a href="javascript:void(0);" onclick="compartir('whatsapp')" aria-label="Compartir en WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="javascript:void(0);" onclick="compartir('email')" aria-label="Compartir por correo electrónico">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="javascript:void(0);" onclick="compartir('facebook')" aria-label="Compartir en Facebook">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="javascript:void(0);" onclick="compartir('twitter')" aria-label="Compartir en X/Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+    </section>
+
+    <section class="seccion seccion-valor" id="servicios">
+        <div class="contenedor">
+            <h2>Por qué elegir un Servicio de Transcripción Especializado</h2>
+            <div class="ventajas-grid">
+                <div class="ventaja-item">
+                    <i class="fas fa-gavel"></i>
+                    <h3>Precisión Jurídica</h3>
+                    <p>Dominio de la terminología legal para actas de copropiedad, asegurando que cada palabra refleje el consenso y las decisiones válidas.</p>
+                </div>
+                <div class="ventaja-item">
+                    <i class="fas fa-lock"></i>
+                    <h3>Confidencialidad Garantizada</h3>
+                    <p>Manejo de audios y documentos bajo estricta reserva profesional. Sus datos y discusiones están seguros.</p>
+                </div>
+                <div class="ventaja-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>Entrega Oportuna</h3>
+                    <p>Cumplimiento de plazos de 3 a 5 días hábiles. Su acta lista a tiempo para archivo o aprobación en asamblea.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="seccion seccion-diferenciador" id="confianza">
+        <div class="contenedor">
+            <h2>Nuestros Diferenciadores en Propiedad Horizontal</h2>
+            <p style="max-width: 800px; margin: 0 auto 30px; font-size: 1.1rem;">Nuestra experiencia no solo es transcribir, sino entender el **contexto** de las decisiones tomadas en Asambleas y Consejos, eliminando ambigüedades y entregando un documento listo para ser firmado y registrado.</p>
+            <a href="trayectoria.html" class="btn-cotizar" style="background-color: var(--color-principal); color: white;">Conozca nuestra Trayectoria <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+
+    <div id="modalCotizacion" class="modal">
+      <div class="modal-contenido">
+        <span class="cerrar" id="cerrarModal">&times;</span>
+        
+        <div class="form-cotizacion-container">
+            <h1>Formulario de Cotización</h1>
+
+            <form id="cotizacionForm">
+                <label>Nombre completo *</label>
+                <input type="text" id="nombre" required>
+
+                <label>Unidad residencial (opcional)</label>
+                <input type="text" id="unidad">
+
+                <label>Correo electrónico *</label>
+                <input type="email" id="correo" required>
+
+                <label>Teléfono *</label>
+                <input type="tel" id="telefono" required>
+
+                <label>Fecha de Cotización</label>
+                <input type="date" id="fecha" readonly> 
+
+                <label>Fecha del acta (opcional)</label>
+                <input type="date" id="fechaActa">
+
+                <div class="row">
+                    <div>
+                        <label>Horas *</label>
+                        <input type="number" id="horas" min="0" required>
+                    </div>
+                    <div>
+                        <label>Minutos *</label>
+                        <input type="number" id="minutos" min="0" max="59" required>
+                    </div>
+                </div>
+
+                <button type="button" onclick="calcularValor()">Calcular valor</button>
+
+                <div class="valor" id="resultado"></div>
+
+                <div class="buttons">
+                    <button type="button" onclick="descargarPDF()">Descargar cotización PDF</button>
+                    <button type="button" onclick="window.open('https://wa.me/573176344778','_blank')">WhatsApp</button>
+                    <button type="button" onclick="document.getElementById('modalCotizacion').style.display='none'">Cerrar</button> 
+                </div>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="whatsapp-float">
+        <div class="mensaje-flotante">
+            ¿Tiene dudas sobre su cotización? ¡Pregúntenos!
+        </div>
+        <a href="https://wa.me/573176344778" target="_blank" class="btn-whatsapp" aria-label="Escribir por WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <footer>
+        <div class="contenedor">
+            <p>© 2025 Francia Ramírez | Transcriptora Profesional de Actas de Propiedad Horizontal</p>
+            <p>Todos los derechos reservados | Cali, Colombia</p>
+            <p>
+                ✉️ <a href="mailto:franciar814@gmail.com">franciar814@gmail.com</a> | 
+                📱 <a href="https://wa.me/573176344778">317 634 4778</a> | 
+                <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/francia_ramirezr" target="_blank">@francia_ramirezr</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Función para obtener la fecha de hoy en formato YYYY-MM-DD
+        function obtenerFechaHoy() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        
+        // Bloque principal que se ejecuta al cargar el DOM
+        document.addEventListener('DOMContentLoaded', () => {
+             // Inicializa el campo de fecha de cotización.
+             document.getElementById("fecha").value = obtenerFechaHoy();
+
+            // -----------------------------------------------------
+            // Lógica de la Ventana Modal (Pop-up)
+            // -----------------------------------------------------
+            const modal = document.getElementById("modalCotizacion");
+            const btnAbrirCTA = document.getElementById("abrirModalCTA");
+            const btnAbrirNav = document.getElementById("abrirModal");
+            const btnCerrar = document.getElementById("cerrarModal");
+
+            function abrirModal(e) {
+                e.preventDefault(); 
+                modal.style.display = "block";
+                document.getElementById('menu-principal').classList.remove('active');
+            }
+            
+            if (btnAbrirCTA) btnAbrirCTA.onclick = abrirModal;
+            if (btnAbrirNav) btnAbrirNav.onclick = abrirModal;
+            if (btnCerrar) btnCerrar.onclick = () => modal.style.display = "none";
+
+            // Cierra el modal si el usuario hace clic fuera de él
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            // Lógica del Menú Hamburguesa
+            document.querySelector('.menu-toggle').addEventListener('click', function() {
+                document.getElementById('menu-principal').classList.toggle('active');
+            });
+        });
+
+        // -----------------------------------------------------
+        // NUEVA FUNCIÓN: Lógica para compartir la página
+        // -----------------------------------------------------
+        function compartir(plataforma) {
+            // **IMPORTANTE**: Reemplace "TU_URL_AQUI" con el enlace real de su sitio web cuando lo aloje.
+            const urlCompartir = encodeURIComponent(window.location.href); 
+            const textoCompartir = encodeURIComponent("¡Necesita precisión en sus actas! Contrate a Francia Ramírez, especialista en transcripción profesional para Propiedad Horizontal. Cotice ahora mismo:"); 
+
+            let link;
+
+            switch (plataforma) {
+                case 'whatsapp':
+                    // El link de WhatsApp funciona mejor para compartir links
+                    link = `https://api.whatsapp.com/send?text=${textoCompartir} ${urlCompartir}`;
+                    break;
+                case 'email':
+                    link = `mailto:?subject=Servicio de Transcripción de Actas - Francia Ramírez&body=${textoCompartir}%0A%0A${urlCompartir}`;
+                    break;
+                case 'facebook':
+                    link = `https://www.facebook.com/sharer/sharer.php?u=${urlCompartir}`;
+                    break;
+                case 'twitter':
+                    // X (Twitter) usa 'url' y 'text'
+                    link = `https://twitter.com/intent/tweet?text=${textoCompartir}&url=${urlCompartir}`;
+                    break;
+                default:
+                    return;
+            }
+            
+            window.open(link, '_blank', 'width=600,height=400');
+        }
+
+
+        // -----------------------------------------------------
+        // Lógica del Formulario de Cotización (Funciones globales)
+        // -----------------------------------------------------
+
+        function validarCampos() {
+            const campos = ["nombre", "correo", "telefono", "horas", "minutos"];
+            for (let id of campos) {
+                if (!document.getElementById(id).value.trim()) {
+                    alert("Por favor complete todos los campos obligatorios (*).");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /**
+         * Calcula el valor de la cotización basado en la tabla de valores.
+         */
+        function calcularValor() {
+            if (!validarCampos()) return 0;
+
+            const horas = parseFloat(document.getElementById("horas").value) || 0;
+            const minutos = parseFloat(document.getElementById("minutos").value) || 0;
+            const totalHoras = horas + minutos / 60;
+            let valor = 0;
+
+            const VALOR_1_HORA = 39000;
+            const VALOR_3_HORAS = 95000;
+            const COSTO_ADICIONAL_POR_30_MIN = 10000;
+            const DURACION_BASE_ADICIONAL = 3; 
+
+            if (totalHoras <= 0) {
+                valor = 0;
+            } else if (totalHoras <= 1) {
+                valor = VALOR_1_HORA;
+            } else if (totalHoras <= DURACION_BASE_ADICIONAL) {
+                valor = VALOR_3_HORAS;
+            } else {
+                valor = VALOR_3_HORAS;
+                
+                const tiempoExcedidoHoras = totalHoras - DURACION_BASE_ADICIONAL;
+                const tramosAdicionales = Math.ceil(tiempoExcedidoHoras / 0.5); 
+                
+                valor += tramosAdicionales * COSTO_ADICIONAL_POR_30_MIN;
+            }
+
+            const valorFormateado = `Valor estimado: $${valor.toLocaleString("es-CO")}`;
+            document.getElementById("resultado").innerText = valorFormateado;
+
+            guardarRegistro(valor);
+            return valor;
+        }
+
+        async function guardarRegistro(valor) {
+            const data = {
+                nombre: document.getElementById("nombre").value,
+                unidad: document.getElementById("unidad").value,
+                correo: document.getElementById("correo").value,
+                telefono: document.getElementById("telefono").value,
+                fecha: document.getElementById("fecha").value,
+                fechaActa: document.getElementById("fechaActa").value,
+                horas: document.getElementById("horas").value,
+                minutos: document.getElementById("minutos").value,
+                valor
+            };
+
+            try {
+                // NOTA: Reemplace con su URL de Google App Script
+                await fetch("https://script.google.com/macros/s/AKfycby0P0RstlnWzxFFrWMsX1sWF8w2DegPYt4GFBAZjqsCrQsJFQzoxQlIgscuHu8RYlxz/exec", {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers: { "Content-Type": "application/json" }
+                });
+            } catch (e) {
+                console.error("Error al guardar el registro:", e);
+            }
+        }
+        
+        // Función auxiliar para convertir una imagen local a Data URL (necesaria para jsPDF)
+        function urlADataUrl(url, callback) {
+            const img = new Image();
+            img.crossOrigin = 'Anonymous'; 
+            img.onload = function () {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                callback(canvas.toDataURL('image/jpeg')); 
+            };
+            img.onerror = function () {
+                console.error("Error al cargar la imagen. Asegúrese de que 'logo_francia.jpg' esté en la misma ruta que este archivo HTML o que su servidor lo permita.");
+                callback(null); 
+            };
+            img.src = url;
+        }
+
+
+        // -----------------------------------------------------
+        // LÓGICA DE DESCARGA PDF - FORMATO PROFESIONAL Y RESALTADO
+        // -----------------------------------------------------
+        async function descargarPDF() {
+            if (!validarCampos()) return;
+            const valor = calcularValor(); 
+
+            const valorTextoLimpio = document.getElementById("resultado").innerText;
+            
+            if (!valorTextoLimpio.includes("Valor estimado")) {
+                alert("El valor estimado no ha sido calculado. Intente de nuevo.");
+                return;
+            }
+            
+            const logoDataUrl = await new Promise(resolve => {
+                urlADataUrl('logo_francia.jpg', resolve); 
+            });
+
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ unit: "mm", format: "a4" });
+            
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const margenX = 20; 
+            let y = 15; 
+            
+            // 0. INTEGRACIÓN DEL LOGO 
+            if (logoDataUrl) {
+                const logoSize = 15; 
+                doc.addImage(logoDataUrl, 'JPEG', margenX, y, logoSize, logoSize);
+                y += 5; 
+            } else {
+                 y = 30; 
+            }
+
+            // 1. TÍTULO PRINCIPAL CENTRADO
+            doc.setFont("Times", "bold");
+            doc.setFontSize(16);
+            doc.text("COTIZACIÓN DE SERVICIO PROFESIONAL", pdfWidth / 2, y, { align: "center" });
+            y += 8;
+            doc.setFontSize(14);
+            doc.text("FRANCIA RAMÍREZ R.", pdfWidth / 2, y, { align: "center" });
+
+            y += 15;
+            doc.setFontSize(11); 
+            doc.setFont("Times", "normal");
+            
+            // 2. DATOS DEL SOLICITANTE
+            
+            const fechaCotizacionRaw = document.getElementById("fecha").value;
+            const [year, month, day] = fechaCotizacionRaw.split('-');
+            const fechaCotizacionFormato = `${day}/${month}/${year}`;
+            
+            doc.text(`Fecha de cotización: ${fechaCotizacionFormato}`, margenX, y);
+            y += 7;
+            doc.text(`Nombre del solicitante: ${document.getElementById("nombre").value}`, margenX, y);
+            y += 7;
+            doc.text(`Unidad residencial: ${document.getElementById("unidad").value || "No especificada"}`, margenX, y);
+            y += 7;
+            doc.text(`Correo electrónico: ${document.getElementById("correo").value}`, margenX, y);
+            y += 7;
+            doc.text(`Teléfono: ${document.getElementById("telefono").value}`, margenX, y);
+            y += 7;
+            doc.text(`Fecha del acta: ${document.getElementById("fechaActa").value || "No indicada"}`, margenX, y);
+            y += 7;
+            doc.text(`Duración del audio cotizado: ${document.getElementById("horas").value}h ${document.getElementById("minutos").value}min`, margenX, y);
+
+            // 3. VALOR CALCULADO RESALTADO Y CENTRADO
+            y += 12;
+            doc.setFont("Times", "bold");
+            doc.setFontSize(18); 
+            doc.text(valorTextoLimpio, pdfWidth / 2, y, { align: "center" });
+            doc.setFontSize(11);
+            doc.setFont("Times", "normal");
+
+            y += 15;
+
+            // 4. CONTENIDO PRINCIPAL Y TABLA DE VALORES
+            
+            // TÍTULO DEL SERVICIO
+            doc.setFont("Times", "bold");
+            doc.setFontSize(12);
+            doc.text("1. Servicio Ofrecido", margenX, y);
+            y += 6;
+            doc.setFont("Times", "normal");
+            doc.setFontSize(11);
+
+            const textoServicio = "Transcripción profesional del acta, garantizando precisión jurídica y estructura conforme a la Ley 675 de 2001. Confidencialidad y entrega oportuna.";
+            const anchoMaximo = pdfWidth - 2 * margenX;
+            let lineas = doc.splitTextToSize(textoServicio, anchoMaximo);
+            doc.text(lineas, margenX, y);
+            y += lineas.length * 5 + 8;
+            
+            // TÍTULO DE TARIFAS
+            doc.setFont("Times", "bold");
+            doc.setFontSize(12);
+            doc.text("2. Tarifas Vigentes 2025 (Valores Base)", margenX, y);
+            y += 6;
+            doc.setFont("Times", "normal");
+            doc.setFontSize(11);
+
+            // TABLA DE VALORES EN FORMATO LISTADO
+            const dataTable = [
+                ["Hasta 1 hora de grabación", "$ 39.000 COP"],
+                ["Hasta 3 horas de grabación", "$ 95.000 COP"],
+                ["Cada 30 minutos adicionales (después de 3h)", "$ 10.000 COP"]
+            ];
+            
+            doc.text(dataTable[0][0] + " ............................................ " + dataTable[0][1], margenX, y); y += 6;
+            doc.text(dataTable[1][0] + " .......................................... " + dataTable[1][1], margenX, y); y += 6;
+            doc.text(dataTable[2][0] + " ................. " + dataTable[2][1], margenX, y); y += 10;
+
+            // CONDICIONES
+            doc.setFont("Times", "bold");
+            doc.setFontSize(12);
+            doc.text("3. Condiciones del Servicio", margenX, y);
+            y += 6;
+            doc.setFont("Times", "normal");
+            doc.setFontSize(11);
+            
+            const textoCondiciones = "Se solicita un anticipo del 50% para iniciar el trabajo. La confirmación se realiza mediante el envío del comprobante al WhatsApp 317 634 4778. Plazo de entrega de 3 a 5 días hábiles.";
+            lineas = doc.splitTextToSize(textoCondiciones, anchoMaximo);
+            doc.text(lineas, margenX, y);
+            y += lineas.length * 5 + 20;
+
+            // 5. PIE DE FIRMA Y DATOS DE CONTACTO (Centrado)
+            doc.setFont("Times", "italic");
+            doc.text("Agradecemos su confianza en nuestros servicios.", pdfWidth / 2, y, { align: "center" });
+            y += 8;
+            doc.setFont("Times", "bold");
+            doc.text("FRANCIA RAMÍREZ R.", pdfWidth / 2, y, { align: "center" });
+            y += 6;
+            doc.setFont("Times", "normal");
+            doc.text("Transcriptora Profesional de Reuniones Grabadas", pdfWidth / 2, y, { align: "center" });
+            y += 5;
+            doc.text("Especialista en Propiedad Horizontal – Cali, Colombia", pdfWidth / 2, y, { align: "center" });
+
+            doc.save(`Cotización_${document.getElementById("nombre").value.replace(/\s/g, '_')}.pdf`);
+        }
+    </script>
+</body>
+</html>

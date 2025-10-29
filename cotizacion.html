@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotización | Francia Ramírez</title>
+    
+    <meta name="description" content="Calculadora de cotización para servicios de transcripción profesional de actas.">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        /* --------------------------------- */
+        /* 0. VARIABLES Y ESTILOS BASE (Mismos que index/quiensoy) */
+        /* --------------------------------- */
+        :root {
+            --color-principal: #1e2a38;
+            --color-acento: #d4af37;
+            --color-fondo: #fdfaf7;
+            --color-texto: #2c2c2c;
+        }
+
+        body {
+            font-family: 'Georgia', serif; 
+            margin: 0;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Centra el formulario verticalmente */
+            padding: 20px;
+        }
+
+        /* --------------------------------- */
+        /* ESTILOS DEL FORMULARIO DE COTIZACIÓN (Adaptados de index.html) */
+        /* --------------------------------- */
+        .form-cotizacion-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .form-cotizacion-container h1 {
+            color: var(--color-principal);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            border-bottom: 3px solid var(--color-acento);
+            padding-bottom: 10px;
+        }
+
+        .form-cotizacion-container label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: var(--color-principal);
+            font-weight: bold;
+        }
+
+        .form-cotizacion-container input[type="text"],
+        .form-cotizacion-container input[type="email"],
+        .form-cotizacion-container input[type="tel"],
+        .form-cotizacion-container input[type="date"],
+        .form-cotizacion-container input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .row > div {
+            flex: 1;
+        }
+
+        .form-cotizacion-container button {
+            background-color: var(--color-principal);
+            color: white;
+            padding: 12px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .form-cotizacion-container button:hover {
+            background-color: var(--color-acento);
+            color: var(--color-principal);
+        }
+        
+        .form-cotizacion-container button:active {
+            transform: scale(0.99);
+        }
+
+        .valor {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border: 2px solid var(--color-acento);
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--color-principal);
+            min-height: 25px; 
+        }
+        
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .buttons button {
+            width: 100%;
+            margin-top: 0;
+        }
+        
+        .buttons button:nth-child(1) { /* Descargar PDF */
+            background-color: var(--color-acento);
+            color: var(--color-principal);
+        }
+        .buttons button:nth-child(2) { /* WhatsApp */
+            background-color: #25d366;
+            color: white;
+        }
+        .buttons button:nth-child(3) { /* Cerrar/Regresar */
+            background-color: #999;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .form-cotizacion-container {
+                padding: 25px 15px;
+            }
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-cotizacion-container">
+        <h1>Formulario de Cotización</h1>
+
+        <form id="cotizacionForm">
+            <label>Nombre completo *</label>
+            <input type="text" id="nombre" required>
+
+            <label>Unidad residencial (opcional)</label>
+            <input type="text" id="unidad">
+
+            <label>Correo electrónico *</label>
+            <input type="email" id="correo" required>
+
+            <label>Teléfono *</label>
+            <input type="tel" id="telefono" required>
+
+            <label>Fecha de Cotización</label>
+            <input type="date" id="fecha" readonly> 
+
+            <label>Fecha del acta (opcional)</label>
+            <input type="date" id="fechaActa">
+
+            <div class="row">
+                <div>
+                    <label>Horas *</label>
+                    <input type="number" id="horas" min="0" value="0" required>
+                </div>
+                <div>
+                    <label>Minutos *</label>
+                    <input type="number" id="minutos" min="0" max="59" value="0" required>
+                </div>
+            </div>
+
+            <button type="button" onclick="calcularValor()">Calcular valor</button>
+
+            <div class="valor" id="resultado">Esperando cálculo...</div>
+
+            <div class="buttons">
+                <button type="button" onclick="descargarPDF()">Descargar cotización PDF</button>
+                <button type="button" onclick="window.open('https://wa.me/573176344778','_blank')">WhatsApp</button>
+                <button type="button" onclick="window.location.href = 'index.html'">Regresar a la página principal</button> 
+            </div>
+        </form>
+    </div>
+
+    <script>
+        window.jsPDF = window.jspdf.jsPDF;
+
+        // Fija la fecha de hoy al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fecha').value = today;
+        });
+
+        // TARIFA: $70.000 COP por hora (según análisis previo de index.html)
+        const TARIFA_HORA = 70000;
+        const TARIFA_MINUTO = TARIFA_HORA / 60; 
+
+        let valorCalculado = 0;
+
+        function formatoMoneda(valor) {
+            return new Intl.NumberFormat('es-CO', { 
+                style: 'currency', 
+                currency: 'COP', 
+                minimumFractionDigits: 0 
+            }).format(valor);
+        }
+
+        function validarCampos() {
+            const horas = parseInt(document.getElementById('horas').value);
+            const minutos = parseInt(document.getElementById('minutos').value);
+            
+            // Validar campos de tiempo
+            if (isNaN(horas) || isNaN(minutos) || (horas === 0 && minutos === 0)) {
+                alert('Por favor, ingrese un tiempo de grabación válido (horas y/o minutos).');
+                return false;
+            }
+            if (minutos < 0 || minutos > 59) {
+                alert('Los minutos deben estar entre 0 y 59.');
+                return false;
+            }
+            
+            // Validar campos de texto (simulación de required)
+            const nombre = document.getElementById('nombre').value.trim();
+            const correo = document.getElementById('correo').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+
+            if (!nombre || !correo || !telefono) {
+                alert('Por favor, complete todos los campos obligatorios (*).');
+                return false;
+            }
+
+            return true;
+        }
+
+        function calcularValor() {
+            if (!validarCampos()) {
+                return;
+            }
+
+            const horas = parseInt(document.getElementById('horas').value) || 0;
+            const minutos = parseInt(document.getElementById('minutos').value) || 0;
+
+            const totalMinutos = (horas * 60) + minutos;
+            
+            // Cálculo: Minutos Totales * Tarifa por minuto
+            valorCalculado = totalMinutos * TARIFA_MINUTO;
+            
+            // Redondeo al peso más cercano
+            valorCalculado = Math.round(valorCalculado);
+
+            document.getElementById('resultado').innerHTML = `El valor de la transcripción es: <strong>${formatoMoneda(valorCalculado)} COP</strong>`;
+        }
+
+        function descargarPDF() {
+            if (valorCalculado === 0) {
+                alert('Por favor, calcule el valor antes de descargar la cotización.');
+                return;
+            }
+            if (!validarCampos()) {
+                return;
+            }
+
+            const nombre = document.getElementById('nombre').value;
+            const unidad = document.getElementById('unidad').value || 'N/A';
+            const correo = document.getElementById('correo').value;
+            const telefono = document.getElementById('telefono').value;
+            const fechaCotizacion = document.getElementById('fecha').value;
+            const fechaActa = document.getElementById('fechaActa').value || 'N/A';
+            const horas = document.getElementById('horas').value;
+            const minutos = document.getElementById('minutos').value;
+            const tiempoGrabacion = `${horas}h ${minutos}min`;
+
+            // Configuración de jsPDF (copiada de index.html)
+            const doc = new jsPDF();
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const margenX = 20;
+            const anchoMaximo = pdfWidth - 40;
+            let y = 20;
+
+            // 1. ENCABEZADO Y TÍTULO
+            doc.setFont("Times", "bold");
+            doc.setFontSize(16);
+            doc.text("COTIZACIÓN DE SERVICIOS DE TRANSCRIPCIÓN", pdfWidth / 2, y, { align: "center" });
+            y += 10;
+            doc.setFontSize(12);
+            doc.text(`Fecha de Cotización: ${fechaCotizacion}`, margenX, y);
+            y += 8;
+
+            // 2. DETALLES DEL CLIENTE
+            doc.setFont("Times", "bold");
+            doc.text("1. Detalles del Cliente y del Proyecto", margenX, y);
+            y += 6;
+            doc.setFont("Times", "normal");
+            doc.setFontSize(11);
+            doc.text(`Nombre/Contacto: ${nombre}`, margenX, y);
+            y += 5;
+            doc.text(`Unidad/Empresa: ${unidad}`, margenX, y);
+            y += 5;
+            doc.text(`Correo: ${correo}`, margenX, y);
+            y += 5;
+            doc.text(`Teléfono: ${telefono}`, margenX, y);
+            y += 5;
+            doc.text(`Fecha del Acta: ${fechaActa}`, margenX, y);
+            y += 10;
+
+            // 3. DETALLE DE LA TRANSCRIPCIÓN
+            doc.setFont("Times", "bold");
+            doc.setFontSize(12);
+            doc.text("2. Tiempo de Grabación y Valor", margenX, y);
+            y += 6;
+            doc.setFont("Times", "normal");
+            doc.setFontSize(11);
+            
+            // Tabla simple de valor
+            doc.text(`Tiempo Total de Grabación: ${tiempoGrabacion}`, margenX, y);
+            y += 6;
+            doc.text("Valor Estimado del Servicio:", margenX + 100, y);
+            doc.setFont("Times", "bold");
+            doc.text(`${formatoMoneda(valorCalculado)} COP`, margenX + 100, y, { align: 'right' });
+            y += 10;
+            doc.setFont("Times", "normal"); // Volver a normal
+
+            // 4. CONDICIONES
+            doc.setFont("Times", "bold");
+            doc.setFontSize(12);
+            doc.text("3. Condiciones del Servicio", margenX, y);
+            y += 6;
+            doc.setFont("Times", "normal");
+            doc.setFontSize(11);
+            
+            const textoCondiciones = "Se solicita un anticipo del 50% para iniciar el trabajo. La confirmación se realiza mediante el envío del comprobante al WhatsApp 317 634 4778. Plazo de entrega de 3 a 5 días hábiles. Este valor es una estimación y puede variar ligeramente si el tiempo de grabación final difiere del cotizado.";
+            let lineas = doc.splitTextToSize(textoCondiciones, anchoMaximo);
+            doc.text(lineas, margenX, y);
+            y += lineas.length * 5 + 15;
+
+            // 5. PIE DE FIRMA Y DATOS DE CONTACTO (Centrado)
+            doc.setFont("Times", "italic");
+            doc.text("Agradecemos su confianza en nuestros servicios.", pdfWidth / 2, y, { align: "center" });
+            y += 8;
+            doc.setFont("Times", "bold");
+            doc.text("FRANCIA RAMÍREZ R.", pdfWidth / 2, y, { align: "center" });
+            y += 6;
+            doc.setFont("Times", "normal");
+            doc.text("Transcriptora Profesional de Reuniones Grabadas", pdfWidth / 2, y, { align: "center" });
+            y += 5;
+            doc.text("Cali, Colombia", pdfWidth / 2, y, { align: "center" });
+            y += 5;
+            doc.text("WhatsApp: 317 634 4778 | Correo: franciar814@gmail.com", pdfWidth / 2, y, { align: "center" });
+            
+            // Guardar el archivo
+            doc.save(`Cotizacion_FRR_${nombre.replace(/\s/g, '_')}.pdf`);
+        }
+    </script>
+
+</body>
+</html>
