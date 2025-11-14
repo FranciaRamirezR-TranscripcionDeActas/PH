@@ -935,7 +935,6 @@
         }
 
         async function guardarRegistro(valor) {
-
     const data = {
         nombre: document.getElementById("nombre").value,
         unidad: document.getElementById("unidad").value,
@@ -946,18 +945,28 @@
         horas: document.getElementById("horas").value,
         minutos: document.getElementById("minutos").value,
         valor: valor,
-        secret: "token_publico_francia_2025"   // 🔐 OBLIGATORIO PARA GUARDAR EN GOOGLE SHEETS
+        secret: "token_publico_francia_2025"
     };
 
+    // 🔥 PEGA AQUÍ TU NUEVA URL DEL PASO 4
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw18JBqQGvB31xpkbIptN7_kBJM18jEJAidZeS_RLgHIdT0tbDUVs1nAdR_K7gxmCoZjg/exec";
+
     try {
-        await fetch("https://script.google.com/macros/s/AKfycbw18JBqQGvB31xpkbIptN7_kBJM18jEJAidZeS_RLgHIdT0tbDUVs1nAdR_K7gxmCoZjg/exec", {
+        console.log("📤 Enviando datos al CRM...", data);
+        
+        const response = await fetch(SCRIPT_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            headers: { 
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data),
+            mode: "no-cors"
         });
-        console.log("Registro enviado correctamente.");
+        
+        console.log("✅ Datos enviados correctamente al CRM");
+        
     } catch (error) {
-        console.error("Error enviando datos al panel:", error);
+        console.error("❌ Error al enviar datos:", error);
     }
 }
 
