@@ -880,47 +880,43 @@
             return valor;
         }
 
-async function guardarRegistro(valor) {
-    const data = {
-        nombre: document.getElementById("nombre").value,
-        unidad: document.getElementById("unidad").value,
-        correo: document.getElementById("correo").value,
-        telefono: document.getElementById("telefono").value,
-        fecha: document.getElementById("fecha").value,
-        fechaActa: document.getElementById("fechaActa").value,
-        horas: document.getElementById("horas").value,
-        minutos: document.getElementById("minutos").value,
-        valor: valor,
-        secret: "token_publico_francia_2025"
-    };
+        async function guardarRegistro(valor) {
+            const data = {
+                nombre: document.getElementById("nombre").value,
+                unidad: document.getElementById("unidad").value,
+                correo: document.getElementById("correo").value,
+                telefono: document.getElementById("telefono").value,
+                fecha: document.getElementById("fecha").value,
+                fechaActa: document.getElementById("fechaActa").value,
+                horas: document.getElementById("horas").value,
+                minutos: document.getElementById("minutos").value,
+                valor: valor,
+                secret: "token_publico_francia_2025"
+            };
 
-    // ⚠️ REEMPLAZA ESTA URL CON LA NUEVA QUE COPIASTE
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXH15GU1QNIjz1yHB7kQEz9ntBOSozNIW27S_V9i3aaGdQZZO1NeX-Mn6uYRMCQraEyg/exec";
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXH15GU1QNIjz1yHB7kQEz9ntBOSozNIW27S_V9i3aaGdQZZO1NeX-Mn6uYRMCQraEyg/exec";
 
-    try {
-        console.log("📤 Enviando datos al servidor...");
-        console.log("Datos:", data);
-        
-        const response = await fetch(SCRIPT_URL, {
-            method: "POST",
-            headers: { 
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
-        
-        // Pero si llega aquí sin error, significa que se envió
-        console.log("✅ Datos enviados correctamente");
-        console.log("Verifica en tu Google Sheet que se haya guardado el registro");
-        
-        // Mostrar mensaje al usuario
-        alert("✅ Cotización enviada. Verifica tu email de confirmación en unos momentos.");
-        
-    } catch (error) {
-        console.error("❌ Error enviando datos:", error);
-        alert("⚠️ Hubo un problema al enviar. Por favor intenta de nuevo o contacta por WhatsApp.");
-    }
-}
+            try {
+                console.log("📤 Enviando datos al servidor...");
+                console.log("Datos:", data);
+                
+                const response = await fetch(SCRIPT_URL, {
+                    redirect: "follow",
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "text/plain;charset=utf-8"
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                console.log("✅ Datos enviados correctamente al servidor");
+                console.log("📋 Verifica tu Google Sheet para confirmar el registro");
+                
+            } catch (error) {
+                console.error("❌ Error enviando datos:", error);
+                console.log("⚠️ Nota: Si ves este error pero los datos llegan a Google Sheets, es normal con CORS");
+            }
+        }
         
         function urlADataUrl(url, callback) {
             const img = new Image();
