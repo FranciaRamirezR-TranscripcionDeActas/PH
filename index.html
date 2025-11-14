@@ -935,6 +935,7 @@
         }
 
         async function guardarRegistro(valor) {
+
     const data = {
         nombre: document.getElementById("nombre").value,
         unidad: document.getElementById("unidad").value,
@@ -945,7 +946,7 @@
         horas: document.getElementById("horas").value,
         minutos: document.getElementById("minutos").value,
         valor: valor,
-        secret: "token_publico_francia_2025"   // 🔐 SECRETO OBLIGATORIO
+        secret: "token_publico_francia_2025"   // 🔐 OBLIGATORIO PARA GUARDAR EN GOOGLE SHEETS
     };
 
     try {
@@ -954,24 +955,12 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         });
+        console.log("Registro enviado correctamente.");
     } catch (error) {
         console.error("Error enviando datos al panel:", error);
     }
 }
 
-
-            try {
-                // NOTA: Reemplace con su URL de Google App Script
-                await fetch(await fetch("https://script.google.com/macros/s/AKfycbw18JBqQGvB31xpkbIptN7_kBJM18jEJAidZeS_RLgHIdT0tbDUVs1nAdR_K7gxmCoZjg/exec", {
-, {
-                    method: "POST",
-                    body: JSON.stringify(data),
-                    headers: { "Content-Type": "application/json" }
-                });
-            } catch (e) {
-                console.error("Error al guardar el registro:", e);
-            }
-        }
         
         // Función auxiliar para convertir una imagen local a Data URL (necesaria para jsPDF)
         function urlADataUrl(url, callback) {
