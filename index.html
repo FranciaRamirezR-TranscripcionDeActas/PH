@@ -948,8 +948,8 @@
         secret: "token_publico_francia_2025"
     };
 
-    // 🔥 PEGA AQUÍ TU NUEVA URL DEL PASO 4
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw18JBqQGvB31xpkbIptN7_kBJM18jEJAidZeS_RLgHIdT0tbDUVs1nAdR_K7gxmCoZjg/exec";
+    // 🔥 NUEVA URL DE TU IMPLEMENTACIÓN
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1fTrgHWKewGX8VpDK3RyCPcuYENYy9F6_ljFE9tNk8XbJyEnrN8dnbHmjtBVSsf6pGQ/exec";
 
     try {
         console.log("📤 Enviando datos al CRM...", data);
@@ -959,14 +959,20 @@
             headers: { 
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data),
-            mode: "no-cors"
+            body: JSON.stringify(data)
         });
         
-        console.log("✅ Datos enviados correctamente al CRM");
+        const result = await response.json();
+        console.log("✅ Respuesta del servidor:", result);
+        
+        if (result.status === "success") {
+            console.log("✅✅ ¡Datos guardados correctamente en Google Sheets!");
+        } else {
+            console.error("❌ Error del servidor:", result.message);
+        }
         
     } catch (error) {
-        console.error("❌ Error al enviar datos:", error);
+        console.error("❌ Error enviando datos:", error);
     }
 }
 
