@@ -1119,5 +1119,43 @@
             doc.save(`Cotización_${document.getElementById("nombre").value.replace(/\s/g, '_')}.pdf`);
         }
     </script>
+<script>
+    // ================================
+    // PANEL SECRETO PARA ADMINISTRACIÓN
+    // ================================
+
+    const adminURL = "https://script.google.com/macros/s/AKfycbw18JBqQGvB31xpkbIptN7_kBJM18jEJAidZeS_RLgHIdT0tbDUVs1nAdR_K7gxmCoZjg/exec";
+
+    // ---- OPCIÓN 1: Activar con teclas (PC) ----
+    document.addEventListener("keydown", function(e) {
+        if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "a") {
+            window.open(adminURL, "_blank");
+        }
+    });
+
+    // ---- OPCIÓN 2: Activar tocando el logo 5 veces (CELULAR) ----
+    let contadorToques = 0;
+    let tiempoUltimoToque = 0;
+
+    const logo = document.querySelector(".logo-box img");
+
+    logo.addEventListener("click", function() {
+        const ahora = Date.now();
+
+        if (ahora - tiempoUltimoToque < 450) { 
+            contadorToques++;
+        } else {
+            contadorToques = 1;
+        }
+
+        tiempoUltimoToque = ahora;
+
+        if (contadorToques >= 5) {
+            window.open(adminURL, "_blank");
+            contadorToques = 0;
+        }
+    });
+</script>
+
 </body>
 </html>
