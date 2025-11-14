@@ -949,7 +949,8 @@
 
             try {
                 // NOTA: Reemplace con su URL de Google App Script
-                await fetch("https://script.google.com/macros/s/AKfycby0P0RstlnWzxFFrWMsX1sWF8w2DegPYt4GFBAZjqsCrQsJFQzoxQlIgscuHu8RYlxz/exec", {
+                await fetch(await fetch("https://script.google.com/macros/s/AKfycbw18JBqQGvB31xpkbIptN7_kBJM18jEJAidZeS_RLgHIdT0tbDUVs1nAdR_K7gxmCoZjg/exec", {
+, {
                     method: "POST",
                     body: JSON.stringify(data),
                     headers: { "Content-Type": "application/json" }
