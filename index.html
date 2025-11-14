@@ -18,11 +18,11 @@
         /* 0. VARIABLES Y ESTILOS BASE */
         /* --------------------------------- */
         :root {
-            --color-principal: #1e2a38; /* Azul marino oscuro */
-            --color-acento: #d4af37; /* Dorado */
+            --color-principal: #1e2a38;
+            --color-acento: #d4af37;
             --color-fondo: #fdfaf7;
             --color-texto: #2c2c2c;
-            --altura-promo: 35px; /* Altura de la nueva barra de promoción */
+            --altura-promo: 35px;
         }
 
         body {
@@ -32,7 +32,6 @@
             color: var(--color-texto);
             line-height: 1.6;
             overflow-x: hidden; 
-            /* Agregamos padding al body para evitar que la barra superior tape el contenido al inicio */
             padding-top: var(--altura-promo); 
         }
 
@@ -55,26 +54,26 @@
             left: 0;
             width: 100%;
             height: var(--altura-promo);
-            background-color: var(--color-acento); /* Dorado */
-            color: var(--color-principal); /* Azul oscuro */
+            background-color: var(--color-acento);
+            color: var(--color-principal);
             text-align: center;
             line-height: var(--altura-promo);
             font-size: 0.95rem;
             font-weight: bold;
-            z-index: 200; /* Asegura que esté por encima de todo */
+            z-index: 200;
             text-decoration: none;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             transition: background-color 0.3s ease;
         }
 
         .barra-promocion:hover {
-            background-color: #c09c32; /* Dorado un poco más oscuro al pasar el ratón */
-            color: white; /* Mejor contraste al hacer hover */
+            background-color: #c09c32;
+            color: white;
         }
         
         .barra-promocion i {
             margin-right: 8px;
-            animation: pulse 1.5s infinite; /* Animación para llamar la atención */
+            animation: pulse 1.5s infinite;
         }
         
         @keyframes pulse {
@@ -99,20 +98,17 @@
             align-items: center;
         }
         
-        /* Ajuste para que el header NO se quede fijo en top:0, sino debajo de la barra */
         @media (min-width: 901px) {
             header {
                 top: var(--altura-promo);
             }
         }
-        /* Esto evita que el menú tape el logo al hacer scroll, manteniendo top:0 para móviles */
         @media (max-width: 900px) {
             header {
                 top: 0; 
             }
         }
         
-        /* AJUSTES PARA HACER EL LOGO Y NOMBRE MÁS GRANDES */
         .logo-box {
             display: flex; 
             align-items: center; 
@@ -120,27 +116,23 @@
         }
 
         header img {
-            /* Incremento del tamaño del logo (antes 45px) */
             height: 55px; 
             border-radius: 50%;
         }
 
         header h1 {
             margin: 0;
-            /* Incremento del tamaño del nombre (antes 1.5rem) */
             font-size: 1.8rem;
             color: var(--color-acento);
             letter-spacing: 1px;
         }
 
-        /* AJUSTES PARA HACER LAS PESTAÑAS MÁS GRANDES */
         nav a {
             color: white;
             text-decoration: none;
             margin: 0 15px;
             font-weight: 500;
             transition: color 0.3s;
-            /* Incremento del tamaño de las pestañas (antes 0.95rem) */
             font-size: 1.1rem;
         }
 
@@ -172,7 +164,6 @@
         }
 
         .hero img {
-            /* Asegurarse de que esta imagen sea la misma que se usa en el PDF (logo_francia.jpg) */
             width: 150px;
             border-radius: 50%;
             margin-bottom: 25px;
@@ -310,37 +301,22 @@
             max-width: 1200px;
             margin: 50px auto;
             padding: 0 20px;
-            /* Forzar el layout de una sola columna, eliminando el flex lateral */
             display: block; 
         }
 
-        /* Ocultamos la columna de imagen de perfil completamente */
         .imagen-perfil-columna {
             display: none; 
             visibility: hidden;
         }
-        
-        /* Eliminamos los estilos de la imagen de perfil ya que ha sido oculta */
-        /*
-        .imagen-perfil-columna img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            border: 5px solid var(--color-acento);
-        }
-        */
 
         .texto-trayectoria {
-            flex: 1; /* Ocupa el espacio restante */
-            /* Eliminamos el padding izquierdo, ya no hay columna a la izquierda */
+            flex: 1;
             padding-left: 0; 
             min-width: 0; 
             position: relative; 
-            z-index: 1; /* Asegurar que el texto esté encima */
+            z-index: 1;
         }
         
-        /* Pseudo-elemento para el logo repetido de fondo */
         .texto-trayectoria::before {
             content: "";
             position: absolute;
@@ -348,16 +324,15 @@
             left: 0;
             right: 0;
             bottom: 0;
-            z-index: -1; /* Lo enviamos detrás del contenido */
-            background-image: url('logo_francia.jpg'); /* Usamos el logo */
-            background-repeat: repeat-y; /* Repetir verticalmente */
-            background-size: 150px; /* Tamaño del logo */
-            background-position: center; /* Posicionamiento centrado */
-            opacity: 0.05; /* Hacemos el logo muy transparente (color natural + transparencia) */
-            pointer-events: none; /* Asegura que no interfiera con el texto */
+            z-index: -1;
+            background-image: url('logo_francia.jpg');
+            background-repeat: repeat-y;
+            background-size: 150px;
+            background-position: center;
+            opacity: 0.05;
+            pointer-events: none;
         }
         
-        /* Aseguramos que el texto esté visible sobre el fondo */
         .texto-trayectoria h2, .texto-trayectoria p {
             position: relative; 
             z-index: 2;
@@ -390,14 +365,14 @@
         }
 
         .whatsapp-float .btn-whatsapp {
-            background-color: #25d366; /* Color oficial de WhatsApp */
+            background-color: #25d366;
             color: white;
             padding: 15px;
             border-radius: 50%;
             font-size: 2.2rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             transition: transform 0.3s;
-            line-height: 1; /* Para centrar el ícono */
+            line-height: 1;
             text-decoration: none;
         }
 
@@ -414,15 +389,13 @@
             font-size: 1rem;
             font-weight: bold;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            /* Animación para aparecer de forma sutil */
             opacity: 0;
             transform: translateX(10px);
             transition: opacity 0.5s ease, transform 0.5s ease;
-            white-space: nowrap; /* Evita que el texto se rompa */
-            pointer-events: none; /* Asegura que el clic pase al botón */
+            white-space: nowrap;
+            pointer-events: none;
         }
         
-        /* Efecto de aparecer y que se mantenga visible */
         .whatsapp-float:hover .mensaje-flotante,
         .whatsapp-float .btn-whatsapp:hover + .mensaje-flotante,
         .whatsapp-float .mensaje-flotante.show { 
@@ -436,18 +409,14 @@
                 right: 15px;
             }
             .whatsapp-float .mensaje-flotante {
-                /* Ocultar en pantallas muy pequeñas si es necesario */
                 display: none; 
             }
             
-            /* RESPONSIVIDAD DE LA PÁGINA TRAYECTORIA */
             .trayectoria-container {
-                /* Aseguramos el layout simple en móvil */
                 margin: 20px auto;
                 display: block;
             }
             .imagen-perfil-columna {
-                /* Ya está oculto, aseguramos */
                 display: none;
             }
             
@@ -600,7 +569,6 @@
         @media (max-width: 900px) {
             header { padding: 10px 20px; }
             
-            /* Ajuste de los elementos del logo para móviles para mantener la estética */
             header img {
                 height: 40px; 
             }
@@ -803,7 +771,6 @@
     </footer>
 
     <script>
-        // Función para obtener la fecha de hoy en formato YYYY-MM-DD
         function obtenerFechaHoy() {
             const today = new Date();
             const year = today.getFullYear();
@@ -812,14 +779,9 @@
             return `${year}-${month}-${day}`;
         }
         
-        // Bloque principal que se ejecuta al cargar el DOM
         document.addEventListener('DOMContentLoaded', () => {
-             // Inicializa el campo de fecha de cotización.
              document.getElementById("fecha").value = obtenerFechaHoy();
 
-            // -----------------------------------------------------
-            // Lógica de la Ventana Modal (Pop-up)
-            // -----------------------------------------------------
             const modal = document.getElementById("modalCotizacion");
             const btnAbrirCTA = document.getElementById("abrirModalCTA");
             const btnAbrirNav = document.getElementById("abrirModal");
@@ -835,24 +797,18 @@
             if (btnAbrirNav) btnAbrirNav.onclick = abrirModal;
             if (btnCerrar) btnCerrar.onclick = () => modal.style.display = "none";
 
-            // Cierra el modal si el usuario hace clic fuera de él
             window.onclick = function(event) {
                 if (event.target === modal) {
                     modal.style.display = "none";
                 }
             }
 
-            // Lógica del Menú Hamburguesa
             document.querySelector('.menu-toggle').addEventListener('click', function() {
                 document.getElementById('menu-principal').classList.toggle('active');
             });
         });
 
-        // -----------------------------------------------------
-        // NUEVA FUNCIÓN: Lógica para compartir la página
-        // -----------------------------------------------------
         function compartir(plataforma) {
-            // **IMPORTANTE**: Reemplace "TU_URL_AQUI" con el enlace real de su sitio web cuando lo aloje.
             const urlCompartir = encodeURIComponent(window.location.href); 
             const textoCompartir = encodeURIComponent("¡Necesita precisión en sus actas! Contrate a Francia Ramírez, especialista en transcripción profesional para Propiedad Horizontal. Cotice ahora mismo:"); 
 
@@ -860,7 +816,6 @@
 
             switch (plataforma) {
                 case 'whatsapp':
-                    // El link de WhatsApp funciona mejor para compartir links
                     link = `https://api.whatsapp.com/send?text=${textoCompartir} ${urlCompartir}`;
                     break;
                 case 'email':
@@ -870,7 +825,6 @@
                     link = `https://www.facebook.com/sharer/sharer.php?u=${urlCompartir}`;
                     break;
                 case 'twitter':
-                    // X (Twitter) usa 'url' y 'text'
                     link = `https://twitter.com/intent/tweet?text=${textoCompartir}&url=${urlCompartir}`;
                     break;
                 default:
@@ -879,11 +833,6 @@
             
             window.open(link, '_blank', 'width=600,height=400');
         }
-
-
-        // -----------------------------------------------------
-        // Lógica del Formulario de Cotización (Funciones globales)
-        // -----------------------------------------------------
 
         function validarCampos() {
             const campos = ["nombre", "correo", "telefono", "horas", "minutos"];
@@ -896,9 +845,6 @@
             return true;
         }
 
-        /**
-         * Calcula el valor de la cotización basado en la tabla de valores.
-         */
         function calcularValor() {
             if (!validarCampos()) return 0;
 
@@ -927,7 +873,7 @@
                 valor += tramosAdicionales * COSTO_ADICIONAL_POR_30_MIN;
             }
 
-            const valorFormateado = `Valor estimado: $${valor.toLocaleString("es-CO")}`;
+            const valorFormateado = `Valor estimado: ${valor.toLocaleString("es-CO")}`;
             document.getElementById("resultado").innerText = valorFormateado;
 
             guardarRegistro(valor);
@@ -935,49 +881,46 @@
         }
 
         async function guardarRegistro(valor) {
-    const data = {
-        nombre: document.getElementById("nombre").value,
-        unidad: document.getElementById("unidad").value,
-        correo: document.getElementById("correo").value,
-        telefono: document.getElementById("telefono").value,
-        fecha: document.getElementById("fecha").value,
-        fechaActa: document.getElementById("fechaActa").value,
-        horas: document.getElementById("horas").value,
-        minutos: document.getElementById("minutos").value,
-        valor: valor,
-        secret: "token_publico_francia_2025"
-    };
+            const data = {
+                nombre: document.getElementById("nombre").value,
+                unidad: document.getElementById("unidad").value,
+                correo: document.getElementById("correo").value,
+                telefono: document.getElementById("telefono").value,
+                fecha: document.getElementById("fecha").value,
+                fechaActa: document.getElementById("fechaActa").value,
+                horas: document.getElementById("horas").value,
+                minutos: document.getElementById("minutos").value,
+                valor: valor,
+                secret: "token_publico_francia_2025"
+            };
 
-    // 🔥 NUEVA URL DE TU IMPLEMENTACIÓN
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1fTrgHWKewGX8VpDK3RyCPcuYENYy9F6_ljFE9tNk8XbJyEnrN8dnbHmjtBVSsf6pGQ/exec";
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz2W11bfSS80B-Qx0F2UpXxgRyXJT6AtTHam4bQS-UqYK80Q8Jd3hSzoxx42gyzVD7kSg/exec";
 
-    try {
-        console.log("📤 Enviando datos al CRM...", data);
-        
-        const response = await fetch(SCRIPT_URL, {
-            method: "POST",
-            headers: { 
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
-        
-        const result = await response.json();
-        console.log("✅ Respuesta del servidor:", result);
-        
-        if (result.status === "success") {
-            console.log("✅✅ ¡Datos guardados correctamente en Google Sheets!");
-        } else {
-            console.error("❌ Error del servidor:", result.message);
+            try {
+                console.log("📤 Enviando datos al CRM...", data);
+                
+                const response = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                console.log("✅ Respuesta del servidor:", result);
+                
+                if (result.status === "success") {
+                    console.log("✅✅ ¡Datos guardados correctamente en Google Sheets!");
+                } else {
+                    console.error("❌ Error del servidor:", result.message);
+                }
+                
+            } catch (error) {
+                console.error("❌ Error enviando datos:", error);
+            }
         }
         
-    } catch (error) {
-        console.error("❌ Error enviando datos:", error);
-    }
-}
-
-        
-        // Función auxiliar para convertir una imagen local a Data URL (necesaria para jsPDF)
         function urlADataUrl(url, callback) {
             const img = new Image();
             img.crossOrigin = 'Anonymous'; 
@@ -996,10 +939,6 @@
             img.src = url;
         }
 
-
-        // -----------------------------------------------------
-        // LÓGICA DE DESCARGA PDF - FORMATO PROFESIONAL Y RESALTADO
-        // -----------------------------------------------------
         async function descargarPDF() {
             if (!validarCampos()) return;
             const valor = calcularValor(); 
@@ -1015,7 +954,6 @@
                 urlADataUrl('logo_francia.jpg', resolve); 
             });
 
-
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ unit: "mm", format: "a4" });
             
@@ -1023,7 +961,6 @@
             const margenX = 20; 
             let y = 15; 
             
-            // 0. INTEGRACIÓN DEL LOGO 
             if (logoDataUrl) {
                 const logoSize = 15; 
                 doc.addImage(logoDataUrl, 'JPEG', margenX, y, logoSize, logoSize);
@@ -1032,7 +969,6 @@
                  y = 30; 
             }
 
-            // 1. TÍTULO PRINCIPAL CENTRADO
             doc.setFont("Times", "bold");
             doc.setFontSize(16);
             doc.text("COTIZACIÓN DE SERVICIO PROFESIONAL", pdfWidth / 2, y, { align: "center" });
@@ -1043,8 +979,6 @@
             y += 15;
             doc.setFontSize(11); 
             doc.setFont("Times", "normal");
-            
-            // 2. DATOS DEL SOLICITANTE
             
             const fechaCotizacionRaw = document.getElementById("fecha").value;
             const [year, month, day] = fechaCotizacionRaw.split('-');
@@ -1064,7 +998,6 @@
             y += 7;
             doc.text(`Duración del audio cotizado: ${document.getElementById("horas").value}h ${document.getElementById("minutos").value}min`, margenX, y);
 
-            // 3. VALOR CALCULADO RESALTADO Y CENTRADO
             y += 12;
             doc.setFont("Times", "bold");
             doc.setFontSize(18); 
@@ -1074,9 +1007,6 @@
 
             y += 15;
 
-            // 4. CONTENIDO PRINCIPAL Y TABLA DE VALORES
-            
-            // TÍTULO DEL SERVICIO
             doc.setFont("Times", "bold");
             doc.setFontSize(12);
             doc.text("1. Servicio Ofrecido", margenX, y);
@@ -1090,7 +1020,6 @@
             doc.text(lineas, margenX, y);
             y += lineas.length * 5 + 8;
             
-            // TÍTULO DE TARIFAS
             doc.setFont("Times", "bold");
             doc.setFontSize(12);
             doc.text("2. Tarifas Vigentes 2025 (Valores Base)", margenX, y);
@@ -1098,7 +1027,6 @@
             doc.setFont("Times", "normal");
             doc.setFontSize(11);
 
-            // TABLA DE VALORES EN FORMATO LISTADO
             const dataTable = [
                 ["Hasta 1 hora de grabación", "$ 39.000 COP"],
                 ["Hasta 3 horas de grabación", "$ 95.000 COP"],
@@ -1109,7 +1037,6 @@
             doc.text(dataTable[1][0] + " .......................................... " + dataTable[1][1], margenX, y); y += 6;
             doc.text(dataTable[2][0] + " ................. " + dataTable[2][1], margenX, y); y += 10;
 
-            // CONDICIONES
             doc.setFont("Times", "bold");
             doc.setFontSize(12);
             doc.text("3. Condiciones del Servicio", margenX, y);
@@ -1122,7 +1049,6 @@
             doc.text(lineas, margenX, y);
             y += lineas.length * 5 + 20;
 
-            // 5. PIE DE FIRMA Y DATOS DE CONTACTO (Centrado)
             doc.setFont("Times", "italic");
             doc.text("Agradecemos su confianza en nuestros servicios.", pdfWidth / 2, y, { align: "center" });
             y += 8;
@@ -1138,20 +1064,14 @@
         }
     </script>
 <script>
-    // ================================
-    // PANEL SECRETO PARA ADMINISTRACIÓN
-    // ================================
-
     const adminURL = "https://script.google.com/macros/s/AKfycbw18JBqQGvB31xpkbIptN7_kBJM18jEJAidZeS_RLgHIdT0tbDUVs1nAdR_K7gxmCoZjg/exec";
 
-    // ---- OPCIÓN 1: Activar con teclas (PC) ----
     document.addEventListener("keydown", function(e) {
         if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "a") {
             window.open(adminURL, "_blank");
         }
     });
 
-    // ---- OPCIÓN 2: Activar tocando el logo 5 veces (CELULAR) ----
     let contadorToques = 0;
     let tiempoUltimoToque = 0;
 
