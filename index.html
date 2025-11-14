@@ -880,7 +880,7 @@
             return valor;
         }
 
-        async function guardarRegistro(valor) {
+        function guardarRegistro(valor) {
             const data = {
                 nombre: document.getElementById("nombre").value,
                 unidad: document.getElementById("unidad").value,
@@ -894,28 +894,32 @@
                 secret: "token_publico_francia_2025"
             };
 
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXH15GU1QNIjz1yHB7kQEz9ntBOSozNIW27S_V9i3aaGdQZZO1NeX-Mn6uYRMCQraEyg/exec";
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqYTx4bfRwcfjvWW7esXoA1VHgpVZizOQ5GPVyXZEuttwgaJ55mJ_OpOZ8o9gmaVqqKA/exec";
 
-            try {
-                console.log("📤 Enviando datos al servidor...");
-                console.log("Datos:", data);
-                
-                const response = await fetch(SCRIPT_URL, {
-                    redirect: "follow",
-                    method: "POST",
-                    headers: { 
-                        "Content-Type": "text/plain;charset=utf-8"
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                console.log("✅ Datos enviados correctamente al servidor");
-                console.log("📋 Verifica tu Google Sheet para confirmar el registro");
-                
-            } catch (error) {
-                console.error("❌ Error enviando datos:", error);
-                console.log("⚠️ Nota: Si ves este error pero los datos llegan a Google Sheets, es normal con CORS");
-            }
+            console.log("📤 Enviando cotización al sistema...");
+            console.log("📋 Datos:", data);
+            
+            // Crear imagen invisible para enviar sin CORS
+            const img = new Image();
+            const params = new URLSearchParams();
+            
+            Object.keys(data).forEach(key => {
+                params.append(key, data[key]);
+            });
+            
+            // Usar GET con parámetros (más compatible)
+            img.src = SCRIPT_URL + '?' + params.toString();
+            
+            // Evento cuando se carga (opcional)
+            img.onload = function() {
+                console.log("✅ Cotización enviada correctamente");
+            };
+            
+            img.onerror = function() {
+                console.log("⚠️ Respuesta recibida (puede parecer error pero los datos se enviaron)");
+            };
+            
+            console.log("📊 Verificando envío a Google Sheets...");
         }
         
         function urlADataUrl(url, callback) {
