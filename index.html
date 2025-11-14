@@ -909,10 +909,8 @@ async function guardarRegistro(valor) {
             body: JSON.stringify(data)
         });
         
-        // Con mode: "no-cors", no podemos leer la respuesta
         // Pero si llega aquí sin error, significa que se envió
         console.log("✅ Datos enviados correctamente");
-        console.log("⚠️ Nota: Con 'no-cors' no podemos verificar la respuesta del servidor");
         console.log("Verifica en tu Google Sheet que se haya guardado el registro");
         
         // Mostrar mensaje al usuario
