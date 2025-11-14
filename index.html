@@ -935,17 +935,30 @@
         }
 
         async function guardarRegistro(valor) {
-            const data = {
-                nombre: document.getElementById("nombre").value,
-                unidad: document.getElementById("unidad").value,
-                correo: document.getElementById("correo").value,
-                telefono: document.getElementById("telefono").value,
-                fecha: document.getElementById("fecha").value,
-                fechaActa: document.getElementById("fechaActa").value,
-                horas: document.getElementById("horas").value,
-                minutos: document.getElementById("minutos").value,
-                valor
-            };
+    const data = {
+        nombre: document.getElementById("nombre").value,
+        unidad: document.getElementById("unidad").value,
+        correo: document.getElementById("correo").value,
+        telefono: document.getElementById("telefono").value,
+        fecha: document.getElementById("fecha").value,
+        fechaActa: document.getElementById("fechaActa").value,
+        horas: document.getElementById("horas").value,
+        minutos: document.getElementById("minutos").value,
+        valor: valor,
+        secret: "token_publico_francia_2025"   // 🔐 SECRETO OBLIGATORIO
+    };
+
+    try {
+        await fetch("https://script.google.com/macros/s/AKfycbw18JBqQGvB31xpkbIptN7_kBJM18jEJAidZeS_RLgHIdT0tbDUVs1nAdR_K7gxmCoZjg/exec", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+    } catch (error) {
+        console.error("Error enviando datos al panel:", error);
+    }
+}
+
 
             try {
                 // NOTA: Reemplace con su URL de Google App Script
