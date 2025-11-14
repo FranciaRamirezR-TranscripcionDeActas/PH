@@ -903,7 +903,6 @@ async function guardarRegistro(valor) {
         
         const response = await fetch(SCRIPT_URL, {
             method: "POST",
-            mode: "no-cors", // ← ESTO ES CRÍTICO PARA CORS
             headers: { 
                 "Content-Type": "application/json"
             },
