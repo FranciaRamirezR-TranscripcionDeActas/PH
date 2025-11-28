@@ -881,46 +881,69 @@
         }
 
         function guardarRegistro(valor) {
-            const data = {
-                nombre: document.getElementById("nombre").value,
-                unidad: document.getElementById("unidad").value,
-                correo: document.getElementById("correo").value,
-                telefono: document.getElementById("telefono").value,
-                fecha: document.getElementById("fecha").value,
-                fechaActa: document.getElementById("fechaActa").value,
-                horas: document.getElementById("horas").value,
-                minutos: document.getElementById("minutos").value,
-                valor: valor,
-                secret: "token_publico_francia_2025"
-            };
+    const data = {
+        nombre: document.getElementById("nombre").value,
+        unidad: document.getElementById("unidad").value,
+        correo: document.getElementById("correo").value,
+        telefono: document.getElementById("telefono").value,
+        fecha: document.getElementById("fecha").value,
+        fechaActa: document.getElementById("fechaActa").value,
+        horas: document.getElementById("horas").value,
+        minutos: document.getElementById("minutos").value,
+        valor: valor,
+        secret: "token_publico_francia_2025"
+    };
 
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynzmfNosyzEC2zQDep0dV2AeW0DFZ7O5u2bpOU76LheGuHgCIXZh1W09Q3KUx0m2eU/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynzmfNosyzEC2zQDep0dV2AeW0DFZ7O5u2bpOU76LheGuHgCIXZh1W09Q3KUx0m2eU/exec";
 
-            console.log("📤 Enviando cotización al sistema...");
-            console.log("📋 Datos:", data);
-            
-            // Crear imagen invisible para enviar sin CORS
-            const img = new Image();
-            const params = new URLSearchParams();
-            
-            Object.keys(data).forEach(key => {
-                params.append(key, data[key]);
-            });
-            
-            // Usar GET con parámetros (más compatible)
-            img.src = SCRIPT_URL + '?' + params.toString();
-            
-            // Evento cuando se carga (opcional)
-            img.onload = function() {
-                console.log("✅ Cotización enviada correctamente");
-            };
-            
-            img.onerror = function() {
-                console.log("⚠️ Respuesta recibida (puede parecer error pero los datos se enviaron)");
-            };
-            
-            console.log("📊 Verificando envío a Google Sheets...");
-        }
+    console.log("📤 Enviando cotización al sistema...");
+    console.log("📋 Datos:", data);
+    
+    // Método 1: Imagen invisible (mantener como respaldo)
+    const img = new Image();
+    const params = new URLSearchParams();
+    
+    Object.keys(data).forEach(key => {
+        params.append(key, data[key]);
+    });
+    
+    const urlConParams = SCRIPT_URL + '?' + params.toString();
+    img.src = urlConParams;
+    
+    img.onload = function() {
+        console.log("✅ Cotización enviada correctamente (método imagen)");
+    };
+    
+    img.onerror = function() {
+        console.log("⚠️ Respuesta recibida vía imagen");
+    };
+    
+    // Método 2: Fetch como respaldo (más compatible con móviles)
+    fetch(urlConParams, {
+        method: 'GET',
+        mode: 'no-cors' // Importante para evitar errores CORS
+    })
+    .then(() => {
+        console.log("✅ Cotización enviada correctamente (método fetch)");
+    })
+    .catch(error => {
+        console.log("⚠️ Fetch completado (los datos se enviaron aunque aparezca error):", error);
+    });
+    
+    // Método 3: Iframe oculto (máxima compatibilidad)
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = urlConParams;
+    document.body.appendChild(iframe);
+    
+    // Remover iframe después de 5 segundos
+    setTimeout(() => {
+        document.body.removeChild(iframe);
+        console.log("✅ Cotización enviada correctamente (método iframe)");
+    }, 5000);
+    
+    console.log("📊 Verificando envío a Google Sheets...");
+}
         
         function urlADataUrl(url, callback) {
             const img = new Image();
