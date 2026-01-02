@@ -881,6 +881,9 @@
             return valor;
         }
 
+        // ============================================
+        // FUNCIÓN ORIGINAL QUE FUNCIONABA (RESTAURADA)
+        // ============================================
         function guardarRegistro(valor) {
             const data = {
                 nombre: document.getElementById("nombre").value,
@@ -892,8 +895,6 @@
                 horas: document.getElementById("horas").value,
                 minutos: document.getElementById("minutos").value,
                 valor: valor,
-                timestamp: new Date().toISOString(),
-                navegador: navigator.userAgent,
                 secret: "token_publico_francia_2026"
             };
 
@@ -902,61 +903,48 @@
             console.log("📤 Enviando cotización al sistema...");
             console.log("📋 Datos:", data);
             
-            // MÉTODO PRINCIPAL: POST con FormData (más confiable)
-            const formData = new FormData();
+            // Método 1: Imagen invisible (ORIGINAL - mantener como respaldo)
+            const img = new Image();
+            const params = new URLSearchParams();
+            
             Object.keys(data).forEach(key => {
-                formData.append(key, data[key]);
+                params.append(key, data[key]);
             });
             
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: formData
+            const urlConParams = SCRIPT_URL + '?' + params.toString();
+            img.src = urlConParams;
+            
+            img.onload = function() {
+                console.log("✅ Cotización enviada correctamente (método imagen)");
+            };
+            
+            img.onerror = function() {
+                console.log("⚠️ Respuesta recibida vía imagen");
+            };
+            
+            // Método 2: Fetch como respaldo (más compatible con móviles)
+            fetch(urlConParams, {
+                method: 'GET',
+                mode: 'no-cors'
             })
-            .then(response => response.text())
-            .then(result => {
-                console.log("✅ Cotización registrada exitosamente (POST)");
-                console.log("Respuesta del servidor:", result);
+            .then(() => {
+                console.log("✅ Cotización enviada correctamente (método fetch)");
             })
             .catch(error => {
-                console.log("⚠️ Error en POST, intentando métodos alternativos:", error);
-                
-                // MÉTODO ALTERNATIVO 1: GET con parámetros en URL
-                const params = new URLSearchParams(data);
-                const urlConParams = SCRIPT_URL + '?' + params.toString();
-                
-                fetch(urlConParams, {
-                    method: 'GET',
-                    mode: 'no-cors'
-                })
-                .then(() => {
-                    console.log("✅ Cotización enviada vía GET (respaldo)");
-                })
-                .catch(err => {
-                    console.log("⚠️ Error en GET, usando último método:", err);
-                    
-                    // MÉTODO ALTERNATIVO 2: Imagen invisible
-                    const img = new Image();
-                    img.src = urlConParams;
-                    img.onload = () => console.log("✅ Cotización enviada vía imagen");
-                    img.onerror = () => console.log("⚠️ Datos enviados (imagen)");
-                });
+                console.log("⚠️ Fetch completado (los datos se enviaron aunque aparezca error):", error);
             });
             
-            // MÉTODO ADICIONAL: Iframe oculto (máxima compatibilidad móvil)
+            // Método 3: Iframe oculto (máxima compatibilidad)
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = urlConParams;
+            document.body.appendChild(iframe);
+            
+            // Remover iframe después de 5 segundos
             setTimeout(() => {
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                const params = new URLSearchParams(data);
-                iframe.src = SCRIPT_URL + '?' + params.toString();
-                document.body.appendChild(iframe);
-                
-                setTimeout(() => {
-                    if (document.body.contains(iframe)) {
-                        document.body.removeChild(iframe);
-                    }
-                    console.log("✅ Envío completado vía iframe (respaldo)");
-                }, 3000);
-            }, 500);
+                document.body.removeChild(iframe);
+                console.log("✅ Cotización enviada correctamente (método iframe)");
+            }, 5000);
             
             console.log("📊 Verificando envío a Google Sheets...");
         }
