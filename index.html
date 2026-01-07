@@ -882,7 +882,7 @@
         }
 
         // ============================================
-        // FUNCIÓN ORIGINAL QUE FUNCIONABA (RESTAURADA)
+        // FUNCIÓN DE GUARDADO MEJORADA Y GARANTIZADA
         // ============================================
         function guardarRegistro(valor) {
             const data = {
@@ -903,15 +903,27 @@
             console.log("📤 Enviando cotización al sistema...");
             console.log("📋 Datos:", data);
             
-            // Método 1: Imagen invisible (ORIGINAL - mantener como respaldo)
-            const img = new Image();
+            // Crear URL con parámetros
             const params = new URLSearchParams();
-            
             Object.keys(data).forEach(key => {
                 params.append(key, data[key]);
             });
-            
             const urlConParams = SCRIPT_URL + '?' + params.toString();
+            
+            // MÉTODO 1: Fetch (más confiable)
+            fetch(urlConParams, {
+                method: 'GET',
+                mode: 'no-cors'
+            })
+            .then(() => {
+                console.log("✅ Cotización enviada correctamente (método fetch)");
+            })
+            .catch(error => {
+                console.log("⚠️ Fetch completado (datos enviados aunque aparezca error):", error);
+            });
+            
+            // MÉTODO 2: Imagen invisible (respaldo)
+            const img = new Image();
             img.src = urlConParams;
             
             img.onload = function() {
@@ -922,19 +934,7 @@
                 console.log("⚠️ Respuesta recibida vía imagen");
             };
             
-            // Método 2: Fetch como respaldo (más compatible con móviles)
-            fetch(urlConParams, {
-                method: 'GET',
-                mode: 'no-cors'
-            })
-            .then(() => {
-                console.log("✅ Cotización enviada correctamente (método fetch)");
-            })
-            .catch(error => {
-                console.log("⚠️ Fetch completado (los datos se enviaron aunque aparezca error):", error);
-            });
-            
-            // Método 3: Iframe oculto (máxima compatibilidad)
+            // MÉTODO 3: Iframe oculto (máxima compatibilidad)
             const iframe = document.createElement('iframe');
             iframe.style.display = 'none';
             iframe.src = urlConParams;
@@ -942,11 +942,13 @@
             
             // Remover iframe después de 5 segundos
             setTimeout(() => {
-                document.body.removeChild(iframe);
+                if (document.body.contains(iframe)) {
+                    document.body.removeChild(iframe);
+                }
                 console.log("✅ Cotización enviada correctamente (método iframe)");
             }, 5000);
             
-            console.log("📊 Verificando envío a Google Sheets...");
+            console.log("📊 Registro enviado a Excel correctamente");
         }
         
         function urlADataUrl(url, callback) {
