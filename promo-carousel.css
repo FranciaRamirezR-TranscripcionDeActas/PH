@@ -1,5 +1,5 @@
 /* ============================================= */
-/* SISTEMA DE POPUPS CARRUSEL - FRANCIA RAMÍREZ */
+/* SISTEMA DE POPUPS CARRUSEL - DISEÑO FRESCO Y ATRACTIVO */
 /* ============================================= */
 
 .promo-carousel-overlay {
@@ -11,7 +11,7 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.75);
     z-index: 99999;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(5px);
     animation: fadeInOverlay 0.5s ease-in-out;
 }
 
@@ -38,7 +38,7 @@
     position: fixed;
     top: 25px;
     right: 25px;
-    background: linear-gradient(135deg, #d4af37 0%, #c09c32 100%);
+    background: linear-gradient(135deg, #d4af37 0%, #f0d574 100%);
     color: #1e2a38;
     border: none;
     width: 55px;
@@ -47,7 +47,7 @@
     font-size: 2rem;
     cursor: pointer;
     z-index: 100000;
-    transition: all 0.4s ease;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,10 +56,10 @@
 }
 
 .promo-carousel-close:hover {
-    transform: rotate(90deg) scale(1.15);
-    background: linear-gradient(135deg, #c09c32 0%, #a88622 100%);
+    transform: rotate(180deg) scale(1.2);
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
     color: white;
-    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.7);
+    box-shadow: 0 12px 35px rgba(255, 107, 107, 0.7);
 }
 
 .promo-carousel-slides {
@@ -83,13 +83,34 @@
 .promo-slide-content {
     background: linear-gradient(135deg, #ffffff 0%, #fdfaf7 100%);
     border-radius: 25px;
-    max-width: 900px;
+    max-width: 1000px;
     width: 100%;
     max-height: 85vh;
     overflow-y: auto;
-    box-shadow: 0 30px 100px rgba(212, 175, 55, 0.5);
-    border: 4px solid #d4af37;
+    box-shadow: 0 30px 100px rgba(212, 175, 55, 0.6);
+    border: 5px solid transparent;
+    background-clip: padding-box;
+    position: relative;
     animation: slideInScale 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.promo-slide-content::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, #d4af37, #f0d574, #d4af37, #c09c32);
+    background-size: 300% 300%;
+    border-radius: 25px;
+    z-index: -1;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 @keyframes slideInScale {
@@ -226,12 +247,12 @@
 }
 
 .feature-box {
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #fdfaf7 100%);
     padding: 35px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 2px solid transparent;
+    border: 2px solid #f0f0f0;
     position: relative;
     overflow: hidden;
 }
@@ -239,29 +260,49 @@
 .feature-box::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-    transition: left 0.6s ease;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
 }
 
 .feature-box:hover::before {
-    left: 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
 .feature-box:hover {
-    transform: translateY(-10px);
+    transform: translateY(-12px) scale(1.02);
     box-shadow: 0 20px 40px rgba(212, 175, 55, 0.35);
     border-color: #d4af37;
 }
 
 .feature-box i {
     font-size: 3.5rem;
-    color: #d4af37;
+    background: linear-gradient(135deg, #d4af37 0%, #f0d574 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 20px;
     display: block;
+    transition: transform 0.3s ease;
+}
+
+.feature-box:hover i {
+    transform: scale(1.15) rotate(5deg);
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(1.15) rotate(5deg) translateY(0); }
+    50% { transform: scale(1.15) rotate(5deg) translateY(-10px); }
 }
 
 .feature-box h3 {
@@ -286,7 +327,8 @@
 }
 
 .promo-btn {
-    background: linear-gradient(135deg, #d4af37 0%, #c09c32 100%);
+    background: linear-gradient(135deg, #d4af37 0%, #f0d574 50%, #d4af37 100%);
+    background-size: 200% auto;
     color: #1e2a38;
     padding: 22px 50px;
     border: none;
@@ -294,31 +336,51 @@
     font-size: 1.3rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s ease;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 12px;
     box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
     font-family: 'Georgia', serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.promo-btn:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .promo-btn:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.05);
     box-shadow: 0 15px 45px rgba(212, 175, 55, 0.7);
-    background: linear-gradient(135deg, #c09c32 0%, #d4af37 100%);
+    background-position: right center;
 }
 
 .promo-btn-secondary {
-    background: white;
-    color: #1e2a38;
+    background: linear-gradient(135deg, #1e2a38 0%, #2a3f54 100%);
+    color: white;
     border: 3px solid #d4af37;
 }
 
 .promo-btn-secondary:hover {
-    background: #d4af37;
-    color: white;
-    border-color: #d4af37;
+    background: linear-gradient(135deg, #d4af37 0%, #f0d574 100%);
+    color: #1e2a38;
+    border-color: #f0d574;
 }
 
 /* ===== SLIDE 2: ASISTENCIA VIRTUAL ===== */
@@ -505,7 +567,8 @@
 }
 
 .promo-tag {
-    background: linear-gradient(135deg, #d4af37 0%, #c09c32 100%);
+    background: linear-gradient(135deg, #d4af37 0%, #f0d574 50%, #d4af37 100%);
+    background-size: 200% auto;
     color: #1e2a38;
     padding: 15px 40px;
     border-radius: 30px;
@@ -514,7 +577,8 @@
     display: inline-block;
     margin-bottom: 30px;
     box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
-    animation: pulse-tag 2.5s infinite;
+    animation: pulse-tag 2.5s infinite, shimmer-bg 3s linear infinite;
+    position: relative;
 }
 
 @keyframes pulse-tag {
@@ -526,6 +590,11 @@
         transform: scale(1.05);
         box-shadow: 0 12px 35px rgba(212, 175, 55, 0.7);
     }
+}
+
+@keyframes shimmer-bg {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
 }
 
 .slide-transcripcion h2 {
@@ -555,24 +624,42 @@
 }
 
 .pricing-box {
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #fdfaf7 100%);
     padding: 45px 35px;
     border-radius: 25px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 3px solid transparent;
+    border: 3px solid #f0f0f0;
     position: relative;
+    overflow: hidden;
+}
+
+.pricing-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+    transition: left 0.7s ease;
+}
+
+.pricing-box:hover::before {
+    left: 100%;
 }
 
 .pricing-box.highlighted {
     border-color: #d4af37;
     transform: scale(1.08);
     box-shadow: 0 20px 60px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, #fffef8 0%, #fdfaf7 100%);
 }
 
 .pricing-box:hover {
     transform: translateY(-12px) scale(1.05);
     box-shadow: 0 20px 55px rgba(212, 175, 55, 0.45);
+    border-color: #d4af37;
 }
 
 .best-value-tag {
