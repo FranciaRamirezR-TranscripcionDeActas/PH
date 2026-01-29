@@ -7,7 +7,7 @@ class PromoCarousel {
         this.currentSlide = 0;
         this.totalSlides = 3;
         this.autoPlayInterval = null;
-        this.autoPlayDelay = 6000; // 6 segundos por slide
+        this.autoPlayDelay = 10000; // 10 segundos por slide (antes 6)
         this.touchStartX = 0;
         this.touchEndX = 0;
         this.isDragging = false;
