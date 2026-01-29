@@ -1,5 +1,6 @@
 // ============================================
 // SISTEMA DE POPUPS CARRUSEL - FRANCIA RAMÍREZ
+// VERSIÓN CORRECTA: Slide 1 atractivo + Slides 2 y 3 diseño compacto original
 // ============================================
 
 class PromoCarousel {
@@ -7,7 +8,7 @@ class PromoCarousel {
         this.currentSlide = 0;
         this.totalSlides = 3;
         this.autoPlayInterval = null;
-        this.autoPlayDelay = 10000; // 10 segundos por slide (antes 6)
+        this.autoPlayDelay = 10000; // 10 segundos por slide
         this.touchStartX = 0;
         this.touchEndX = 0;
         this.isDragging = false;
@@ -68,6 +69,7 @@ class PromoCarousel {
         document.body.insertAdjacentHTML('beforeend', carouselHTML);
     }
 
+    // SLIDE 1: DISEÑO ULTRA ATRACTIVO (se mantiene)
     createSlide1() {
         return `
             <div class="promo-carousel-slide">
@@ -130,83 +132,68 @@ class PromoCarousel {
         `;
     }
 
+    // SLIDE 2: DISEÑO ORIGINAL COMPACTO
     createSlide2() {
         return `
             <div class="promo-carousel-slide">
                 <div class="promo-slide-content">
                     <div class="slide-asistencia">
                         <div class="slide-asistencia-left">
-                            <h2>¿Necesitas Tiempo Para Ti?</h2>
-                            <p class="subtitle-light">Asistencia Virtual y Presencial sin Contratación Permanente</p>
+                            <h2>⏰ ¿Necesitas un Respiro?</h2>
+                            <p class="subtitle-light">Asistencia Virtual & Presencial<br><strong>Sin Contratos • Pago por Días</strong></p>
                             
                             <ul class="situations-list">
                                 <li>
                                     <i class="fas fa-umbrella-beach"></i>
-                                    <span><strong>¿Deseas vacaciones?</strong> Yo me encargo de tu trabajo mientras descansas.</span>
+                                    <span>Vacaciones merecidas sin preocupaciones</span>
                                 </li>
                                 <li>
                                     <i class="fas fa-user-md"></i>
-                                    <span><strong>¿Tienes una cita médica?</strong> Cubro tu asistencia presencial ese día.</span>
+                                    <span>Citas médicas sin abandonar tu puesto</span>
                                 </li>
                                 <li>
-                                    <i class="fas fa-calendar-check"></i>
-                                    <span><strong>¿Compromiso familiar urgente?</strong> Atiendo llamadas, correos y visitas.</span>
+                                    <i class="fas fa-heart"></i>
+                                    <span>Tiempo para tu familia cuando lo necesites</span>
                                 </li>
                                 <li>
-                                    <i class="fas fa-briefcase"></i>
-                                    <span><strong>¿Necesitas apoyo puntual?</strong> Sin salarios fijos, sin contratos largos.</span>
+                                    <i class="fas fa-handshake"></i>
+                                    <span>Apoyo profesional cuando quieras</span>
                                 </li>
                             </ul>
 
                             <div class="quote-text">
-                                <i class="fas fa-quote-left" style="font-size: 1rem; opacity: 0.6;"></i>
-                                Equilibra tu vida personal y laboral sin culpas ni complicaciones.
-                                <i class="fas fa-quote-right" style="font-size: 1rem; opacity: 0.6;"></i>
+                                💼 Experiencia en Propiedad Horizontal<br>
+                                📞 Llamadas • 📧 Correos • 👤 Presencial
                             </div>
                         </div>
 
                         <div class="slide-asistencia-right">
                             <div class="profile-photo-container">
-                                <img src="foto_francia_2.png" alt="Francia Ramírez - Asistente Virtual" onerror="this.src='logo_francia.jpg'">
+                                <img src="foto_francia_2.png" alt="Francia Ramírez" onerror="this.src='logo_francia.jpg'">
                             </div>
 
-                            <h3>Asistencia Profesional Cuando la Necesites</h3>
+                            <h3>Tu Tranquilidad, Mi Prioridad</h3>
 
                             <div class="benefits-list">
                                 <div class="benefit-box">
-                                    <i class="fas fa-phone-alt"></i>
-                                    <span><strong>Atención de llamadas</strong> y gestión de comunicaciones</span>
-                                </div>
-
-                                <div class="benefit-box">
-                                    <i class="fas fa-envelope"></i>
-                                    <span><strong>Gestión de correos</strong> y respuestas profesionales</span>
-                                </div>
-
-                                <div class="benefit-box">
-                                    <i class="fas fa-user-tie"></i>
-                                    <span><strong>Asistencia presencial</strong> en tu lugar de trabajo</span>
-                                </div>
-
-                                <div class="benefit-box">
                                     <i class="fas fa-dollar-sign"></i>
-                                    <span><strong>Pago por días trabajados</strong> sin compromisos mensuales</span>
+                                    <span>Pagas solo los días que necesites</span>
                                 </div>
 
                                 <div class="benefit-box">
                                     <i class="fas fa-clock"></i>
-                                    <span><strong>Disponibilidad flexible</strong> según tus necesidades</span>
+                                    <span>Disponibilidad según tu agenda</span>
                                 </div>
 
                                 <div class="benefit-box">
-                                    <i class="fas fa-handshake"></i>
-                                    <span><strong>Experiencia en propiedad horizontal</strong> y administración</span>
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Discreción y profesionalismo</span>
                                 </div>
                             </div>
 
                             <div class="slide-cta">
-                                <a href="https://wa.me/573176344778?text=Hola%20Francia,%20necesito%20asistencia%20virtual%20o%20presencial" target="_blank" class="promo-btn">
-                                    <i class="fab fa-whatsapp"></i> Solicitar Asistencia
+                                <a href="https://wa.me/573176344778?text=Hola%20Francia,%20necesito%20asistencia" target="_blank" class="promo-btn">
+                                    <i class="fab fa-whatsapp"></i> Solicitar Ahora
                                 </a>
                             </div>
                         </div>
@@ -216,75 +203,68 @@ class PromoCarousel {
         `;
     }
 
+    // SLIDE 3: DISEÑO ORIGINAL COMPACTO
     createSlide3() {
         return `
             <div class="promo-carousel-slide">
                 <div class="promo-slide-content">
                     <div class="slide-transcripcion">
                         <div class="promo-tag">
-                            <i class="fas fa-star"></i> ¡NUEVOS PRECIOS 2026!
+                            ⚡ PRECIOS 2026 - INCREÍBLES
                         </div>
 
-                        <h2><span class="gold-text">Transcripción de Actas</span><br>¡Precios Fantásticos!</h2>
-                        <p class="subtitle">Aprovecha nuestras nuevas tarifas competitivas.<br>Calidad profesional al mejor precio del mercado.</p>
+                        <h2><span class="gold-text">Transcripción de Actas</span><br>Ahorra hasta 50%</h2>
+                        <p class="subtitle">Calidad profesional • Entrega 3-5 días • Confidencial</p>
 
                         <div class="pricing-grid">
                             <div class="pricing-box">
-                                <h3>Hasta 1 Hora</h3>
-                                <p class="duration"><i class="fas fa-clock"></i> 60 minutos</p>
-                                <div class="original-price">$ 70.000 COP</div>
-                                <div class="current-price">$ 44.070 COP</div>
-                                <div class="savings"><i class="fas fa-piggy-bank"></i> Ahorras $ 25.930</div>
+                                <h3>1 Hora</h3>
+                                <p class="duration"><i class="fas fa-clock"></i> 60 min</p>
+                                <div class="original-price">$70.000</div>
+                                <div class="current-price">$44.070</div>
                                 <ul class="pricing-features">
-                                    <li><i class="fas fa-check-circle"></i> Transcripción completa</li>
                                     <li><i class="fas fa-check-circle"></i> Formato profesional</li>
-                                    <li><i class="fas fa-check-circle"></i> Entrega en 3-5 días</li>
-                                    <li><i class="fas fa-check-circle"></i> 1 revisión incluida</li>
+                                    <li><i class="fas fa-check-circle"></i> 1 revisión</li>
                                 </ul>
                             </div>
 
                             <div class="pricing-box highlighted">
-                                <div class="best-value-tag">⭐ MÁS POPULAR</div>
-                                <h3>Hasta 3 Horas</h3>
-                                <p class="duration"><i class="fas fa-clock"></i> 180 minutos</p>
-                                <div class="original-price">$ 210.000 COP</div>
-                                <div class="current-price">$ 107.350 COP</div>
-                                <div class="savings"><i class="fas fa-piggy-bank"></i> ¡Ahorras $ 102.650!</div>
+                                <div class="best-value-tag">⭐ RECOMENDADO</div>
+                                <h3>3 Horas</h3>
+                                <p class="duration"><i class="fas fa-clock"></i> 180 min</p>
+                                <div class="original-price">$210.000</div>
+                                <div class="current-price">$107.350</div>
+                                <div class="savings"><i class="fas fa-fire"></i> ¡Ahorras $102.650!</div>
                                 <ul class="pricing-features">
-                                    <li><i class="fas fa-check-circle"></i> Transcripción completa</li>
                                     <li><i class="fas fa-check-circle"></i> Formato profesional</li>
-                                    <li><i class="fas fa-check-circle"></i> Entrega en 3-5 días</li>
-                                    <li><i class="fas fa-check-circle"></i> 2 revisiones incluidas</li>
-                                    <li class="highlight-feature"><i class="fas fa-star"></i> ¡Mejor relación calidad-precio!</li>
+                                    <li><i class="fas fa-check-circle"></i> 2 revisiones</li>
+                                    <li class="highlight-feature"><i class="fas fa-star"></i> Mejor precio</li>
                                 </ul>
                             </div>
 
                             <div class="pricing-box">
-                                <h3>Adicionales</h3>
-                                <p class="duration"><i class="fas fa-clock"></i> Cada 30 min</p>
-                                <div class="original-price">$ 35.000 COP</div>
-                                <div class="current-price">$ 11.300 COP</div>
-                                <div class="savings"><i class="fas fa-piggy-bank"></i> Ahorras $ 23.700</div>
+                                <h3>Adicional</h3>
+                                <p class="duration"><i class="fas fa-clock"></i> c/30 min</p>
+                                <div class="original-price">$35.000</div>
+                                <div class="current-price">$11.300</div>
                                 <ul class="pricing-features">
-                                    <li><i class="fas fa-check-circle"></i> Después de 3 horas</li>
-                                    <li><i class="fas fa-check-circle"></i> Mismo estándar de calidad</li>
-                                    <li><i class="fas fa-check-circle"></i> Precio por fracción</li>
-                                    <li><i class="fas fa-check-circle"></i> Sin límite de duración</li>
+                                    <li><i class="fas fa-check-circle"></i> Después de 3h</li>
+                                    <li><i class="fas fa-check-circle"></i> Misma calidad</li>
                                 </ul>
                             </div>
                         </div>
 
                         <div class="slide-cta">
                             <a href="#" onclick="promoCarousel.closeAndOpenForm(); return false;" class="promo-btn">
-                                <i class="fas fa-calculator"></i> Cotizar Mi Acta Ahora
+                                <i class="fas fa-calculator"></i> Cotizar Ahora
                             </a>
-                            <a href="https://wa.me/573176344778?text=Hola%20Francia,%20quiero%20información%20sobre%20los%20nuevos%20precios%20de%20transcripción" target="_blank" class="promo-btn promo-btn-secondary">
-                                <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+                            <a href="https://wa.me/573176344778?text=Hola%20Francia,%20quiero%20info%20de%20transcripción" target="_blank" class="promo-btn promo-btn-secondary">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
                             </a>
                         </div>
 
                         <div class="conditions-note">
-                            <i class="fas fa-info-circle"></i> <strong>Condiciones:</strong> Anticipo 50% | Entrega 3-5 días hábiles | Confidencialidad garantizada
+                            <i class="fas fa-shield-alt"></i> Anticipo 50% • Confidencial • Formato Ley 675
                         </div>
                     </div>
                 </div>
@@ -413,14 +393,9 @@ class PromoCarousel {
         this.closeCarousel();
         // Intentar abrir el modal de cotización si existe
         setTimeout(() => {
-            if (typeof abrirModalCotizacion === 'function') {
-                abrirModalCotizacion();
-            } else {
-                // Si no existe la función, buscar el botón de cotización y hacer click
-                const cotizarBtn = document.querySelector('a[href*="Cotización"], a[onclick*="cotizacion"]');
-                if (cotizarBtn) {
-                    cotizarBtn.click();
-                }
+            const modal = document.getElementById('modalCotizacion');
+            if (modal) {
+                modal.style.display = 'block';
             }
         }, 300);
     }
