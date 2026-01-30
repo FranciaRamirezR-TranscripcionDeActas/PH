@@ -847,33 +847,35 @@
         }
 
         function calcularValor() {
-            if (!validarCampos()) return 0;
+    if (!validarCampos()) return 0;
 
-            const horas = parseFloat(document.getElementById("horas").value) || 0;
-            const minutos = parseFloat(document.getElementById("minutos").value) || 0;
-            const totalHoras = horas + minutos / 60;
-            let valor = 0;
+    const horas = parseFloat(document.getElementById("horas").value) || 0;
+    const minutos = parseFloat(document.getElementById("minutos").value) || 0;
+    const totalMinutos = (horas * 60) + minutos;
+    let valor = 0;
 
-            // TARIFAS 2026 - Incremento del 13%
-            const VALOR_1_HORA = 44070;  // 39000 * 1.13
-            const VALOR_3_HORAS = 107350; // 95000 * 1.13
-            const COSTO_ADICIONAL_POR_30_MIN = 11300; // 10000 * 1.13
-            const DURACION_BASE_ADICIONAL = 3; 
+    // TARIFAS 2026 - Incremento del 13%
+    const VALOR_1_HORA = 44070;  // 39000 * 1.13
+    const VALOR_3_HORAS = 107350; // 95000 * 1.13
+    const COSTO_ADICIONAL_POR_30_MIN = 11300; // 10000 * 1.13
 
-            if (totalHoras <= 0) {
-                valor = 0;
-            } else if (totalHoras <= 1) {
-                valor = VALOR_1_HORA;
-            } else if (totalHoras <= DURACION_BASE_ADICIONAL) {
-                valor = VALOR_3_HORAS;
-            } else {
-                valor = VALOR_3_HORAS;
-                
-                const tiempoExcedidoHoras = totalHoras - DURACION_BASE_ADICIONAL;
-                const tramosAdicionales = Math.ceil(tiempoExcedidoHoras / 0.5); 
-                
-                valor += tramosAdicionales * COSTO_ADICIONAL_POR_30_MIN;
-            }
+    if (totalMinutos <= 0) {
+        valor = 0;
+    } else if (totalMinutos <= 60) {
+        // De 0 a 60 minutos: cálculo proporcional
+        valor = (totalMinutos / 60) * VALOR_1_HORA;
+    } else if (totalMinutos <= 180) {
+        // De 61 a 180 minutos: interpolación lineal entre $44.070 y $107.350
+        const minutosExtra = totalMinutos - 60;
+        const incrementoPorMinuto = (VALOR_3_HORAS - VALOR_1_HORA) / 120; // 120 minutos entre 1h y 3h
+        valor = VALOR_1_HORA + (minutosExtra * incrementoPorMinuto);
+    } else {
+        // Más de 180 minutos: $107.350 + adicionales por cada 30 min
+        valor = VALOR_3_HORAS;
+        const minutosExcedidos = totalMinutos - 180;
+        const tramosAdicionales = Math.ceil(minutosExcedidos / 30);
+        valor += tramosAdicionales * COSTO_ADICIONAL_POR_30_MIN;
+    }
 
             const valorFormateado = `Valor estimado: ${valor.toLocaleString("es-CO")}`;
             document.getElementById("resultado").innerText = valorFormateado;
