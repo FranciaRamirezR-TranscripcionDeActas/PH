@@ -851,38 +851,41 @@
 
     const horas = parseFloat(document.getElementById("horas").value) || 0;
     const minutos = parseFloat(document.getElementById("minutos").value) || 0;
-    const totalMinutos = (horas * 60) + minutos;
+    const totalMinutos = (horas * 60) + minutos;  // ← CAMBIADO A MINUTOS
     let valor = 0;
 
-    // TARIFAS 2026 - Incremento del 13%
-    const VALOR_1_HORA = 44070;  // 39000 * 1.13
-    const VALOR_3_HORAS = 107350; // 95000 * 1.13
-    const COSTO_ADICIONAL_POR_30_MIN = 11300; // 10000 * 1.13
+    // TARIFAS 2026
+    const VALOR_1_HORA = 44070;
+    const VALOR_3_HORAS = 107350;
+    const COSTO_ADICIONAL_POR_30_MIN = 11300;
 
     if (totalMinutos <= 0) {
         valor = 0;
     } else if (totalMinutos <= 60) {
-        // De 0 a 60 minutos: cálculo proporcional
+        // De 0 a 60 minutos: proporcional ($734.5 por minuto)
         valor = (totalMinutos / 60) * VALOR_1_HORA;
     } else if (totalMinutos <= 180) {
-        // De 61 a 180 minutos: interpolación lineal entre $44.070 y $107.350
+        // De 61 a 180 minutos: interpolación lineal
         const minutosExtra = totalMinutos - 60;
-        const incrementoPorMinuto = (VALOR_3_HORAS - VALOR_1_HORA) / 120; // 120 minutos entre 1h y 3h
+        const incrementoPorMinuto = (VALOR_3_HORAS - VALOR_1_HORA) / 120;
         valor = VALOR_1_HORA + (minutosExtra * incrementoPorMinuto);
     } else {
-        // Más de 180 minutos: $107.350 + adicionales por cada 30 min
+        // Más de 180 minutos: base + fracciones de 30 min
         valor = VALOR_3_HORAS;
         const minutosExcedidos = totalMinutos - 180;
         const tramosAdicionales = Math.ceil(minutosExcedidos / 30);
         valor += tramosAdicionales * COSTO_ADICIONAL_POR_30_MIN;
     }
 
-            const valorFormateado = `Valor estimado: ${valor.toLocaleString("es-CO")}`;
-            document.getElementById("resultado").innerText = valorFormateado;
+    // Redondeo al peso más cercano
+    valor = Math.round(valor);
 
-            guardarRegistro(valor);
-            return valor;
-        }
+    const valorFormateado = `Valor estimado: ${valor.toLocaleString("es-CO")}`;
+    document.getElementById("resultado").innerText = valorFormateado;
+
+    guardarRegistro(valor);
+    return valor;
+}
 
         // ============================================
         // FUNCIÓN DE GUARDADO MEJORADA Y GARANTIZADA
