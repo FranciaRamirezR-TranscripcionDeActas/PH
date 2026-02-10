@@ -268,26 +268,24 @@ function calcularValor() {
     const totalMinutos = (horas * 60) + minutos;
     
     // TARIFAS 2026
-    const VALOR_1_HORA = 44070;
-    const VALOR_3_HORAS = 107350;
-    const COSTO_ADICIONAL_POR_30_MIN = 11300;
+    const PRECIO_POR_MINUTO = 734.5;        // Hasta 2h 59min
+    const PROMO_3_HORAS = 107350;           // 3 horas exactas (PROMO)
+    const ADICIONAL_30_MIN = 11300;         // Después de 3h
     
     if (totalMinutos <= 0) {
         valorCalculado = 0;
-    } else if (totalMinutos <= 60) {
-        // De 0 a 60 minutos: cálculo proporcional
-        valorCalculado = (totalMinutos / 60) * VALOR_1_HORA;
-    } else if (totalMinutos <= 180) {
-        // De 61 a 180 minutos: interpolación lineal entre $44.070 y $107.350
-        const minutosExtra = totalMinutos - 60;
-        const incrementoPorMinuto = (VALOR_3_HORAS - VALOR_1_HORA) / 120; // 120 minutos entre 1h y 3h
-        valorCalculado = VALOR_1_HORA + (minutosExtra * incrementoPorMinuto);
+    } else if (totalMinutos < 180) {
+        // De 1 a 179 minutos: $734.5 por minuto
+        valorCalculado = totalMinutos * PRECIO_POR_MINUTO;
+    } else if (totalMinutos === 180) {
+        // 3 horas exactas: PROMOCIÓN especial
+        valorCalculado = PROMO_3_HORAS;
     } else {
-        // Más de 180 minutos: $107.350 + adicionales por cada 30 min
-        valorCalculado = VALOR_3_HORAS;
+        // Más de 3 horas: base + fracciones de 30 min
+        valorCalculado = PROMO_3_HORAS;
         const minutosExcedidos = totalMinutos - 180;
         const tramosAdicionales = Math.ceil(minutosExcedidos / 30);
-        valorCalculado += tramosAdicionales * COSTO_ADICIONAL_POR_30_MIN;
+        valorCalculado += tramosAdicionales * ADICIONAL_30_MIN;
     }
     
     // Redondeo al peso más cercano
@@ -295,6 +293,7 @@ function calcularValor() {
 
     document.getElementById('resultado').innerHTML = `El valor de la transcripción es: <strong>${formatoMoneda(valorCalculado)} COP</strong>`;
 }
+        
         function descargarPDF() {
             if (valorCalculado === 0) {
                 alert('Por favor, calcule el valor antes de descargar la cotización.');
@@ -399,4 +398,5 @@ function calcularValor() {
 </body>
 
 </html>
+
 
