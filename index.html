@@ -851,30 +851,28 @@
 
     const horas = parseFloat(document.getElementById("horas").value) || 0;
     const minutos = parseFloat(document.getElementById("minutos").value) || 0;
-    const totalMinutos = (horas * 60) + minutos;  // ← CAMBIADO A MINUTOS
+    const totalMinutos = (horas * 60) + minutos;
     let valor = 0;
 
     // TARIFAS 2026
-    const VALOR_1_HORA = 44070;
-    const VALOR_3_HORAS = 107350;
-    const COSTO_ADICIONAL_POR_30_MIN = 11300;
+    const PRECIO_POR_MINUTO = 734.5;        // Hasta 2h 59min
+    const PROMO_3_HORAS = 107350;           // 3 horas exactas (PROMO)
+    const ADICIONAL_30_MIN = 11300;         // Después de 3h
 
     if (totalMinutos <= 0) {
         valor = 0;
-    } else if (totalMinutos <= 60) {
-        // De 0 a 60 minutos: proporcional ($734.5 por minuto)
-        valor = (totalMinutos / 60) * VALOR_1_HORA;
-    } else if (totalMinutos <= 180) {
-        // De 61 a 180 minutos: interpolación lineal
-        const minutosExtra = totalMinutos - 60;
-        const incrementoPorMinuto = (VALOR_3_HORAS - VALOR_1_HORA) / 120;
-        valor = VALOR_1_HORA + (minutosExtra * incrementoPorMinuto);
+    } else if (totalMinutos < 180) {
+        // De 1 a 179 minutos: $734.5 por minuto
+        valor = totalMinutos * PRECIO_POR_MINUTO;
+    } else if (totalMinutos === 180) {
+        // 3 horas exactas: PROMOCIÓN especial
+        valor = PROMO_3_HORAS;
     } else {
-        // Más de 180 minutos: base + fracciones de 30 min
-        valor = VALOR_3_HORAS;
+        // Más de 3 horas: base + fracciones de 30 min
+        valor = PROMO_3_HORAS;
         const minutosExcedidos = totalMinutos - 180;
         const tramosAdicionales = Math.ceil(minutosExcedidos / 30);
-        valor += tramosAdicionales * COSTO_ADICIONAL_POR_30_MIN;
+        valor += tramosAdicionales * ADICIONAL_30_MIN;
     }
 
     // Redondeo al peso más cercano
