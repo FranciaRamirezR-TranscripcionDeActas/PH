@@ -23,7 +23,9 @@ class PromoCarousel {
         this.autoPlayTimeout = null;
 
         this.infografiaDelay = 8000;   // ms que se muestra la infografía antes de volver al video
-        this.videoFallbackDelay = 25000; // ms de respaldo si el navegador bloquea el autoplay del video
+        this.videoFallbackDelay = 45000; // ms de respaldo (solo se usa si no se puede detectar la duración real del video)
+        this.videoDurationMs = null;   // se calcula automáticamente con la duración real del archivo
+        this.isBuffering = false;      // true mientras el video está cargando/pausado por falta de datos
 
         this.touchStartX = 0;
         this.touchEndX = 0;
@@ -158,6 +160,30 @@ class PromoCarousel {
             video.addEventListener('ended', () => {
                 if (this.currentSlide === 0) {
                     this.nextSlide();
+                }
+            });
+
+            // En cuanto el navegador conoce la duración real del video,
+            // ajustamos el temporizador de respaldo para que no lo corte antes de tiempo.
+            video.addEventListener('loadedmetadata', () => {
+                if (isFinite(video.duration) && video.duration > 0) {
+                    this.videoDurationMs = (video.duration * 1000) + 3000; // margen de seguridad
+                    if (this.currentSlide === 0) {
+                        this.startAutoPlay();
+                    }
+                }
+            });
+
+            // Si el video se pausa por falta de datos (buffering), congelamos
+            // el conteo para no saltar a la infografía mientras sigue cargando.
+            video.addEventListener('waiting', () => {
+                this.isBuffering = true;
+                this.stopAutoPlay();
+            });
+            video.addEventListener('playing', () => {
+                this.isBuffering = false;
+                if (this.currentSlide === 0) {
+                    this.startAutoPlay();
                 }
             });
         }
@@ -328,9 +354,14 @@ class PromoCarousel {
         this.stopAutoPlay();
 
         if (this.currentSlide === 0) {
+            // Mientras el video está cargando (buffering) no arrancamos el respaldo,
+            // así no lo cortamos antes de que termine de sonar/verse.
+            if (this.isBuffering) return;
+
             // El video avanza solo al terminar (evento 'ended').
-            // Este temporizador es un respaldo por si el navegador bloquea el autoplay.
-            this.autoPlayTimeout = setTimeout(() => this.nextSlide(), this.videoFallbackDelay);
+            // Usamos la duración real si ya la conocemos; si no, un respaldo genérico.
+            const delay = this.videoDurationMs || this.videoFallbackDelay;
+            this.autoPlayTimeout = setTimeout(() => this.nextSlide(), delay);
         } else {
             this.autoPlayTimeout = setTimeout(() => this.nextSlide(), this.infografiaDelay);
         }
