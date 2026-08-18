@@ -13,7 +13,7 @@
 // ============================================
 
 const VIDEO_SRC = 'promo-video.mp4';
-const INFOGRAFIA_SRC = 'promo-infografia.jpg';
+const INFOGRAFIA_SRC = 'promo-infografia.png';
 const WHATSAPP_LINK = 'https://wa.me/573176344778?text=Hola%20Francia,%20me%20interesa%20su%20promoci%C3%B3n';
 
 class PromoCarousel {
