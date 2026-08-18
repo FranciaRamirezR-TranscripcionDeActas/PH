@@ -5,20 +5,26 @@
 
 
 /* PANTALLA VIDEO / INFOGRAFÍA */
-.promo-slide-media{background:#0d1520;padding:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;max-width:900px}
-.slide-video{position:relative;width:100%;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 15px 45px rgba(0,0,0,.6);line-height:0}
-.promo-video{width:100%;max-height:72vh;display:block;background:#000}
+.promo-slide-content.promo-slide-media{width:auto;max-width:92vw}
+.promo-slide-media{background:#0d1520;padding:22px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+
+/* Video: se recorta (sin estirar) para eliminar las barras negras del archivo original */
+.slide-video{position:relative;height:min(72vh,640px);aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 15px 45px rgba(0,0,0,.6);line-height:0}
+.promo-video{width:100%;height:100%;display:block;background:#000;object-fit:cover}
 .promo-video-unmute{position:absolute;bottom:18px;right:18px;background:rgba(0,0,0,.65);color:#fff;border:2px solid #d4af37;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.15rem;transition:all .3s ease;z-index:2}
 .promo-video-unmute:hover{background:#d4af37;color:#1e2a38;transform:scale(1.1)}
-.slide-infografia{width:100%;display:flex;justify-content:center;border-radius:18px;overflow:hidden;box-shadow:0 15px 45px rgba(0,0,0,.6)}
-.slide-infografia img{max-width:100%;max-height:75vh;display:block;object-fit:contain;background:#fff}
+
+/* Infografía: tamaño natural de la imagen, sin estirarla ni dejar margen extra */
+.slide-infografia{display:flex;justify-content:center;border-radius:18px;overflow:hidden;box-shadow:0 15px 45px rgba(0,0,0,.6);line-height:0}
+.slide-infografia img{display:block;max-width:88vw;max-height:78vh;width:auto;height:auto;object-fit:contain;background:#fff}
+
 .slide-media-cta{display:flex;justify-content:center;width:100%}
 .slide-media-cta .promo-btn{padding:14px 36px}
 
 /* RESPONSIVE */
 @media (max-width:1024px){.promo-carousel-arrow{width:60px;height:60px;font-size:2rem}.promo-carousel-arrow.prev{left:20px}.promo-carousel-arrow.next{right:20px}}
-@media (max-width:768px){.promo-carousel-close{width:50px;height:50px;font-size:1.8rem;top:15px;right:15px}.promo-carousel-arrow{width:50px;height:50px;font-size:1.6rem}.promo-carousel-arrow.prev{left:10px}.promo-carousel-arrow.next{right:10px}.promo-carousel-indicators{bottom:25px;padding:15px 25px;gap:15px}.promo-carousel-indicator{width:12px;height:12px}.promo-carousel-indicator.active{width:40px}.promo-slide-content{border-radius:20px;max-width:95%;max-height:85vh}.promo-slide-media{padding:18px;gap:16px}.promo-video{max-height:50vh}.slide-infografia img{max-height:55vh}.promo-video-unmute{width:40px;height:40px;font-size:1rem;bottom:12px;right:12px}.slide-media-cta .promo-btn{padding:12px 26px;font-size:.95rem}}
-@media (max-width:480px){.promo-carousel-arrow{display:none}.promo-carousel-indicators{bottom:15px}.promo-slide-media{padding:14px}.promo-video{max-height:42vh}.slide-infografia img{max-height:48vh}}
+@media (max-width:768px){.promo-carousel-close{width:50px;height:50px;font-size:1.8rem;top:15px;right:15px}.promo-carousel-arrow{width:50px;height:50px;font-size:1.6rem}.promo-carousel-arrow.prev{left:10px}.promo-carousel-arrow.next{right:10px}.promo-carousel-indicators{bottom:25px;padding:15px 25px;gap:15px}.promo-carousel-indicator{width:12px;height:12px}.promo-carousel-indicator.active{width:40px}.promo-slide-content{border-radius:20px;max-width:95%;max-height:85vh}.promo-slide-media{padding:16px;gap:12px}.slide-video{height:min(58vh,480px)}.slide-infografia img{max-height:58vh}.promo-video-unmute{width:40px;height:40px;font-size:1rem;bottom:12px;right:12px}.slide-media-cta .promo-btn{padding:12px 26px;font-size:.95rem}}
+@media (max-width:480px){.promo-carousel-arrow{display:none}.promo-carousel-indicators{bottom:15px}.promo-slide-media{padding:12px}.slide-video{height:min(48vh,380px)}.slide-infografia img{max-height:50vh}}
 
 .promo-slide-content::-webkit-scrollbar{width:8px}
 .promo-slide-content::-webkit-scrollbar-track{background:#f1f1f1;border-radius:10px}
