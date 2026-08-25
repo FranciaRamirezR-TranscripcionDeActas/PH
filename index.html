@@ -154,89 +154,46 @@
         /* 2. SECCIÓN HERO (PRINCIPAL) */
         /* --------------------------------- */
         .hero {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 92vh;
-    padding: 60px 20px;
-    overflow: hidden;
-    text-align: center;
-}
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh; 
+            padding: 80px 20px;
+            background-color: var(--color-fondo);
+            text-align: center;
+        }
 
-.hero-video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-}
+        .hero img {
+            width: 150px;
+            border-radius: 50%;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            border: 4px solid var(--color-acento);
+        }
 
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: rgba(253, 250, 247, 0.42);
-}
+        .hero h2 {
+            font-family: "Poppins", sans-serif; 
+            font-size: 3rem; 
+            color: var(--color-principal);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
 
-.hero-contenido {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: 560px;
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    border-radius: 18px;
-    padding: 44px 38px;
-    box-shadow: 0 18px 45px rgba(30, 42, 56, 0.14);
-}
+        .hero h3 {
+            font-size: 1.5rem;
+            color: #4a4a4a;
+            font-weight: normal;
+            max-width: 700px;
+        }
 
-.logo-marco {
-    width: 130px;
-    height: 130px;
-    margin: 0 auto 20px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 20px rgba(30, 42, 56, 0.1);
-}
+        .hero p {
+            max-width: 800px;
+            margin-top: 20px;
+            color: #555;
+            font-size: 1.1rem;
+        }
 
-.hero img {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    border: 4px solid var(--color-acento);
-}
-
-.hero h2 {
-    font-family: "Poppins", sans-serif; 
-    font-size: 2rem; 
-    color: var(--color-principal);
-    margin-bottom: 8px;
-    letter-spacing: -0.5px;
-}
-
-.hero h3 {
-    font-size: 1.1rem;
-    color: #4a4a4a;
-    font-weight: normal;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.hero p {
-    max-width: 800px;
-    margin: 16px auto 0;
-    color: #555;
-    font-size: 1rem;
-}
         .btn-cotizar {
             background-color: var(--color-acento);
             color: var(--color-principal);
@@ -762,7 +719,29 @@
     </header>
 
     <section class="hero" id="inicio">
-
+        <img src="logo_francia.jpg" alt="Logo Francia Ramírez, transcripción profesional">
+        <h2>La Precisión Jurídica que sus Actas Requieren</h2>
+        <h3>Especialista en Transcripción Profesional de Actas de Asamblea y Consejos de Administración.</h3>
+        <p>Garantizo la fidelidad total de sus reuniones grabadas a documentos oficiales, con la estructura y formalidad exigidas por la Ley 675. Servicio confidencial, oportuno y enfocado en la Propiedad Horizontal.</p>
+        
+        <a href="#" id="abrirModalCTA" class="btn-cotizar">Solicite su Cotización al Instante</a>
+        
+        <div class="share-buttons">
+            <p style="margin: 0; font-weight: bold; color: var(--color-principal);">Compartir:</p>
+            <a href="javascript:void(0);" onclick="compartir('whatsapp')" aria-label="Compartir en WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="javascript:void(0);" onclick="compartir('email')" aria-label="Compartir por correo electrónico">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="javascript:void(0);" onclick="compartir('facebook')" aria-label="Compartir en Facebook">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="javascript:void(0);" onclick="compartir('twitter')" aria-label="Compartir en X/Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+    </section>
 
     <section class="seccion seccion-valor" id="servicios">
         <div class="contenedor">
